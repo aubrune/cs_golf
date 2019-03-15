@@ -1,0 +1,63 @@
+<?xml version="1.0"?>
+<launch>
+        
+    <arg name="hardware_interface" default="PositionJointInterface" />
+    <arg name="robot_name" default="iiwa" />
+    <arg name="model" default="iiwa14"/>
+    <arg name="trajectory" default="true"/>
+    <arg name="paused" default="false"/>
+    <arg name="use_sim_time" default="true"/>
+    <arg name="gui" default="true"/>
+    <arg name="headless" default="false"/>
+    <arg name="debug" default="false"/>
+    <arg name="world_name" value="$(find cs_golf)/sim/iiwa_golf.world" />
+
+    <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+    <include file="$(find gazebo_ros)/launch/empty_world.launch">
+        <arg name="world_name" value="$(arg world_name)"/>
+        <arg name="debug" value="$(arg debug)" />
+        <arg name="gui" value="$(arg gui)" />
+        <arg name="paused" value="$(arg paused)"/>
+        <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+        <arg name="headless" value="$(arg headless)"/>
+    </include>
+    
+    <!-- Load the URDF with the given hardware interface into the ROS Parameter Server -->
+    <include file="$(find iiwa_description)/launch/$(arg model)_upload.launch">
+        <arg name="hardware_interface" value="$(arg hardware_interface)"/>
+        <arg name="robot_name" value="$(arg robot_name)" />
+    </include>
+
+    
+    <!-- Spawn controllers - it uses a JointTrajectoryController -->
+    <group  ns="$(arg robot_name)" if="$(arg trajectory)">
+        <rosparam file="$(find iiwa_gazebo)/config/iiwa_control.yaml" command="load" />
+        <include file="$(find iiwa_control)/launch/iiwa_control.launch">
+            <arg name="hardware_interface" value="$(arg hardware_interface)" />
+            <arg name="controllers" value="joint_state_controller $(arg hardware_interface)_trajectory_controller" />
+            <arg name="robot_name" value="$(arg robot_name)" />
+            <arg name="model" value="$(arg model)" />
+        </include>
+        
+    </group>
+    
+    <!-- Spawn controllers - it uses an Effort Controller for each joint -->
+    <group ns="$(arg robot_name)" unless="$(arg trajectory)">
+        <include file="$(find iiwa_control)/launch/iiwa_control.launch">
+            <arg name="hardware_interface" value="$(arg hardware_interface)" />
+            <arg name="controllers" value="joint_state_controller
+                 $(arg hardware_interface)_J1_controller
+                 $(arg hardware_interface)_J2_controller
+                 $(arg hardware_interface)_J3_controller
+                 $(arg hardware_interface)_J4_controller
+                 $(arg hardware_interface)_J5_controller
+                 $(arg hardware_interface)_J6_controller
+                 $(arg hardware_interface)_J7_controller"/>
+            <arg name="robot_name" value="$(arg robot_name)" />
+            <arg name="model" value="$(arg model)" />
+        </include>
+        
+    </group>
+    
+    
+</launch>
