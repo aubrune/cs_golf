@@ -1,0 +1,798 @@
+<sdf version='1.6'>
+  <world name='default'>
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <contact>
+              <collide_bitmask>65535</collide_bitmask>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Grey</name>
+            </script>
+          </material>
+        </visual>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+    </model>
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose frame=''>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    <gui fullscreen='0'>
+      <camera name='user_camera'>
+        <pose frame=''>4.92736 -4.37661 3.74008 0 0.275643 2.35619</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+    <gravity>0 0 -9.8</gravity>
+    <magnetic_field>6e-06 2.3e-05 -4.2e-05</magnetic_field>
+    <atmosphere type='adiabatic'/>
+    <physics name='default_physics' default='0' type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    <scene>
+      <ambient>0.4 0.4 0.4 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    <audio>
+      <device>default</device>
+    </audio>
+    <wind/>
+    <spherical_coordinates>
+      <surface_model>EARTH_WGS84</surface_model>
+      <latitude_deg>0</latitude_deg>
+      <longitude_deg>0</longitude_deg>
+      <elevation>0</elevation>
+      <heading_deg>0</heading_deg>
+    </spherical_coordinates>
+    <model name='iiwa'>
+      <link name='iiwa_link_0'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>-0.1 0 0.07 0 -0 0</pose>
+          <mass>5</mass>
+          <inertia>
+            <ixx>0.05</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.06</iyy>
+            <iyz>0</iyz>
+            <izz>0.03</izz>
+          </inertia>
+        </inertial>
+        <collision name='iiwa_link_0_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_0.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.2</mu>
+                <mu2>0.2</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='iiwa_link_0_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_0.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Grey</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='world_iiwa_joint' type='fixed'>
+        <child>iiwa_link_0</child>
+        <parent>world</parent>
+      </joint>
+      <link name='iiwa_link_1'>
+        <pose frame=''>0 0 0.15 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 -0.03 0.12 0 -0 0</pose>
+          <mass>3.4525</mass>
+          <inertia>
+            <ixx>0.02183</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.007703</iyy>
+            <iyz>-0.003887</iyz>
+            <izz>0.02083</izz>
+          </inertia>
+        </inertial>
+        <collision name='iiwa_link_1_collision'>
+          <pose frame=''>0 0 0.0075 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_1.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.2</mu>
+                <mu2>0.2</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='iiwa_link_1_visual'>
+          <pose frame=''>0 0 0.0075 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_1.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Orange</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='iiwa_joint_1' type='revolute'>
+        <child>iiwa_link_1</child>
+        <parent>iiwa_link_0</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-2.96706</lower>
+            <upper>2.96706</upper>
+            <effort>300</effort>
+            <velocity>10</velocity>
+          </limit>
+          <dynamics>
+            <damping>0.5</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='iiwa_link_2'>
+        <pose frame=''>0 0 0.34 1.5708 -0 -3.14159</pose>
+        <inertial>
+          <pose frame=''>0.0003 0.059 0.042 0 -0 0</pose>
+          <mass>3.4821</mass>
+          <inertia>
+            <ixx>0.02076</ixx>
+            <ixy>0</ixy>
+            <ixz>-0.003626</ixz>
+            <iyy>0.02179</iyy>
+            <iyz>0</iyz>
+            <izz>0.00779</izz>
+          </inertia>
+        </inertial>
+        <collision name='iiwa_link_2_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_2.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.2</mu>
+                <mu2>0.2</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='iiwa_link_2_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_2.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Orange</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='iiwa_joint_2' type='revolute'>
+        <child>iiwa_link_2</child>
+        <parent>iiwa_link_1</parent>
+        <axis>
+          <xyz>-0 1 0</xyz>
+          <limit>
+            <lower>-2.0944</lower>
+            <upper>2.0944</upper>
+            <effort>300</effort>
+            <velocity>10</velocity>
+          </limit>
+          <dynamics>
+            <damping>0.5</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='iiwa_link_3'>
+        <pose frame=''>0 -0 0.55 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0.03 0.13 0 -0 0</pose>
+          <mass>4.05623</mass>
+          <inertia>
+            <ixx>0.03204</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.00972</iyy>
+            <iyz>0.006227</iyz>
+            <izz>0.03042</izz>
+          </inertia>
+        </inertial>
+        <collision name='iiwa_link_3_collision'>
+          <pose frame=''>0 0 -0.026 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_3.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.2</mu>
+                <mu2>0.2</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='iiwa_link_3_visual'>
+          <pose frame=''>0 0 -0.026 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_3.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Orange</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='iiwa_joint_3' type='revolute'>
+        <child>iiwa_link_3</child>
+        <parent>iiwa_link_2</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-2.96706</lower>
+            <upper>2.96706</upper>
+            <effort>300</effort>
+            <velocity>10</velocity>
+          </limit>
+          <dynamics>
+            <damping>0.5</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='iiwa_link_4'>
+        <pose frame=''>0 -0 0.74 1.5708 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0.067 0.034 0 -0 0</pose>
+          <mass>3.4822</mass>
+          <inertia>
+            <ixx>0.02178</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.02075</iyy>
+            <iyz>-0.003625</iyz>
+            <izz>0.007785</izz>
+          </inertia>
+        </inertial>
+        <collision name='iiwa_link_4_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_4.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.2</mu>
+                <mu2>0.2</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='iiwa_link_4_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_4.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Orange</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='iiwa_joint_4' type='revolute'>
+        <child>iiwa_link_4</child>
+        <parent>iiwa_link_3</parent>
+        <axis>
+          <xyz>0 -1 0</xyz>
+          <limit>
+            <lower>-2.0944</lower>
+            <upper>2.0944</upper>
+            <effort>300</effort>
+            <velocity>10</velocity>
+          </limit>
+          <dynamics>
+            <damping>0.5</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='iiwa_link_5'>
+        <pose frame=''>0 0 0.95 0 -0 -3.14159</pose>
+        <inertial>
+          <pose frame=''>0.0001 0.021 0.076 0 -0 0</pose>
+          <mass>2.1633</mass>
+          <inertia>
+            <ixx>0.01287</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.005708</iyy>
+            <iyz>-0.003946</iyz>
+            <izz>0.01112</izz>
+          </inertia>
+        </inertial>
+        <collision name='iiwa_link_5_collision'>
+          <pose frame=''>0 0 -0.026 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_5.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.2</mu>
+                <mu2>0.2</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='iiwa_link_5_visual'>
+          <pose frame=''>0 0 -0.026 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_5.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Orange</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='iiwa_joint_5' type='revolute'>
+        <child>iiwa_link_5</child>
+        <parent>iiwa_link_4</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-2.96706</lower>
+            <upper>2.96706</upper>
+            <effort>300</effort>
+            <velocity>10</velocity>
+          </limit>
+          <dynamics>
+            <damping>0.5</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='iiwa_link_6'>
+        <pose frame=''>0 -0.0607 1.14 1.5708 -0 -3.14159</pose>
+        <inertial>
+          <pose frame=''>0 0.0006 0.0004 0 -0 0</pose>
+          <mass>2.3466</mass>
+          <inertia>
+            <ixx>0.006509</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.006259</iyy>
+            <iyz>0.00031891</iyz>
+            <izz>0.004527</izz>
+          </inertia>
+        </inertial>
+        <collision name='iiwa_link_6_collision'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_6.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.2</mu>
+                <mu2>0.2</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='iiwa_link_6_visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_6.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Orange</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='iiwa_joint_6' type='revolute'>
+        <child>iiwa_link_6</child>
+        <parent>iiwa_link_5</parent>
+        <axis>
+          <xyz>-0 1 -0</xyz>
+          <limit>
+            <lower>-2.0944</lower>
+            <upper>2.0944</upper>
+            <effort>300</effort>
+            <velocity>10</velocity>
+          </limit>
+          <dynamics>
+            <damping>0.5</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <link name='iiwa_link_7'>
+        <pose frame=''>0 0 1.221 0 -0 0</pose>
+        <inertial>
+          <pose frame=''>0 0 0.02 0 -0 0</pose>
+          <mass>3.129</mass>
+          <inertia>
+            <ixx>0.01464</ixx>
+            <ixy>0.0005912</ixy>
+            <ixz>0</ixz>
+            <iyy>0.01465</iyy>
+            <iyz>0</iyz>
+            <izz>0.002872</izz>
+          </inertia>
+        </inertial>
+        <collision name='iiwa_link_7_collision'>
+          <pose frame=''>0 0 -0.0005 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_7.stl</uri>
+            </mesh>
+          </geometry>
+          <surface>
+            <contact>
+              <ode/>
+            </contact>
+            <friction>
+              <ode>
+                <mu>0.2</mu>
+                <mu2>0.2</mu2>
+              </ode>
+              <torsional>
+                <ode/>
+              </torsional>
+            </friction>
+            <bounce/>
+          </surface>
+          <max_contacts>10</max_contacts>
+        </collision>
+        <visual name='iiwa_link_7_visual'>
+          <pose frame=''>0 0 -0.0005 0 -0 0</pose>
+          <geometry>
+            <mesh>
+              <scale>1 1 1</scale>
+              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_7.stl</uri>
+            </mesh>
+          </geometry>
+          <material>
+            <script>
+              <name>Gazebo/Grey</name>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+            </script>
+          </material>
+        </visual>
+        <gravity>1</gravity>
+        <velocity_decay/>
+        <self_collide>0</self_collide>
+        <enable_wind>0</enable_wind>
+        <kinematic>0</kinematic>
+      </link>
+      <joint name='iiwa_joint_7' type='revolute'>
+        <child>iiwa_link_7</child>
+        <parent>iiwa_link_6</parent>
+        <axis>
+          <xyz>0 0 1</xyz>
+          <limit>
+            <lower>-3.05433</lower>
+            <upper>3.05433</upper>
+            <effort>300</effort>
+            <velocity>10</velocity>
+          </limit>
+          <dynamics>
+            <damping>0.5</damping>
+            <friction>0</friction>
+            <spring_reference>0</spring_reference>
+            <spring_stiffness>0</spring_stiffness>
+          </dynamics>
+          <use_parent_model_frame>1</use_parent_model_frame>
+        </axis>
+      </joint>
+      <static>0</static>
+      <plugin name='gazebo_ros_control' filename='libgazebo_ros_control.so'>
+        <robotNamespace>/iiwa</robotNamespace>
+      </plugin>
+      <pose frame=''>0 0 0 0 -0 0</pose>
+    </model>
+    <state world_name='default'>
+      <sim_time>24 205000000</sim_time>
+      <real_time>25 37723707</real_time>
+      <wall_time>1552609580 521021419</wall_time>
+      <iterations>24205</iterations>
+      <model name='ground_plane'>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <scale>1 1 1</scale>
+        <link name='link'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
+      </model>
+      <model name='iiwa'>
+        <pose frame=''>0 -0 0 0 -2e-06 0</pose>
+        <scale>1 1 1</scale>
+        <link name='iiwa_link_0'>
+          <pose frame=''>0 -0 0 0 -2e-06 0</pose>
+          <velocity>1e-06 0 6.5e-05 -1.5e-05 -0.000247 2e-06</velocity>
+          <acceleration>-0.032692 0.00191 0.081357 -0.029031 -0.493966 0.004035</acceleration>
+          <wrench>-0.163459 0.009548 0.406786 0 -0 0</wrench>
+        </link>
+        <link name='iiwa_link_1'>
+          <pose frame=''>0 0 0.15 0 -0 3e-06</pose>
+          <velocity>-1.9e-05 8e-06 6.1e-05 -1.8e-05 -0.000246 0.000147</velocity>
+          <acceleration>-0.09068 0.020381 0.122641 -0.034066 -0.48997 0.21405</acceleration>
+          <wrench>-0.313071 0.070364 0.423418 0 -0 0</wrench>
+        </link>
+        <link name='iiwa_link_2'>
+          <pose frame=''>0 0 0.34 1.5708 2.3e-05 -3.14159</pose>
+          <velocity>-6.6e-05 6e-06 5.3e-05 -6.5e-05 0.000977 0.000148</velocity>
+          <acceleration>-0.036082 0.019205 0.101075 1.75758 1.23545 -0.323537</acceleration>
+          <wrench>-0.125643 0.066873 0.351953 0 -0 0</wrench>
+        </link>
+        <link name='iiwa_link_3'>
+          <pose frame=''>-5e-06 0 0.55 4e-06 -2.5e-05 0</pose>
+          <velocity>0.000138 1.4e-05 4.4e-05 2.3e-05 0.000931 -0.000258</velocity>
+          <acceleration>0.48062 0.021178 0.088621 -3.09534 1.45783 2.39586</acceleration>
+          <wrench>1.94951 0.085903 0.359468 0 -0 0</wrench>
+        </link>
+        <link name='iiwa_link_4'>
+          <pose frame=''>-9e-06 -1e-06 0.739999 1.57081 -2.7e-05 0</pose>
+          <velocity>0.000315 1.1e-05 3.8e-05 5.1e-05 -0.001566 -0.000258</velocity>
+          <acceleration>0.342459 0.014228 0.07233 -3.0386 1.18153 1.50967</acceleration>
+          <wrench>1.19251 0.049545 0.251868 0 -0 0</wrench>
+        </link>
+        <link name='iiwa_link_5'>
+          <pose frame=''>-1.5e-05 -3e-06 0.949999 -8e-06 2.7e-05 -3.14159</pose>
+          <velocity>-1.4e-05 2e-06 3.3e-05 2.3e-05 -0.001565 0.002974</velocity>
+          <acceleration>-0.12695 -0.001077 0.064885 0.045737 -0.573403 -2.48665</acceleration>
+          <wrench>-0.274631 -0.00233 0.140365 0 -0 0</wrench>
+        </link>
+        <link name='iiwa_link_6'>
+          <pose frame=''>-2e-05 -0.060704 1.14 1.57079 2.4e-05 -3.14159</pose>
+          <velocity>-0.000131 -2e-06 2.6e-05 3.7e-05 0.001904 0.002974</velocity>
+          <acceleration>-0.20713 -0.003766 0.05136 0.07303 -1.37891 -1.52658</acceleration>
+          <wrench>-0.486051 -0.008838 0.120522 0 -0 0</wrench>
+        </link>
+        <link name='iiwa_link_7'>
+          <pose frame=''>-2.2e-05 -5e-06 1.221 1e-05 -2.3e-05 0</pose>
+          <velocity>-0.000157 -4e-06 2.1e-05 -4.6e-05 0.001904 -0.00135</velocity>
+          <acceleration>-0.216172 -0.005322 0.040292 3.04536 -0.472752 0.246137</acceleration>
+          <wrench>-0.676401 -0.016652 0.126074 0 -0 0</wrench>
+        </link>
+      </model>
+      <light name='sun'>
+        <pose frame=''>0 0 10 0 -0 0</pose>
+      </light>
+    </state>
+  </world>
+</sdf>
