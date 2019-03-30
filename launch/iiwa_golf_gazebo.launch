@@ -3,7 +3,7 @@
         
     <arg name="hardware_interface" default="PositionJointInterface" />
     <arg name="robot_name" default="iiwa" />
-    <arg name="model" default="iiwa14"/>
+    <arg name="model" default="iiwa7"/>
     <arg name="trajectory" default="true"/>
     <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
