@@ -1,0 +1,4 @@
+uint32 iteration
+moveit_msgs/RobotState current_state
+---
+moveit_msgs/RobotTrajectory trajectory
