@@ -20,9 +20,12 @@ class Robot(object):
     def current_state(self):
         return self.commander.get_current_state()
 
-    def go(self, goal_state, wait=True):
+    def execute(self, *args, **kwargs):
+        return self.group.execute(*args, **kwargs)
+
+    def go(self, goal_state, kv_max=1.0, ka_max=0.5, wait=True):
         if isinstance(goal_state, dict):
             goal_state = dicttostate(goal_state)
-        traj = trapezoidal_speed_trajectory(goal_state, self.current_state)
+        traj = trapezoidal_speed_trajectory(goal_state, self.current_state, kv_max=kv_max, ka_max=ka_max)
         self.group.execute(traj, wait=wait)
 
