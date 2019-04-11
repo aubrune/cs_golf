@@ -14,6 +14,12 @@ LC_ALL=C roslaunch iiwa_moveit demo.launch
 roslaunch cs_golf run.launch
 ```
 
+## Other commands
+```
+# Different world file (no golf club)
+roslaunch cs_golf iiwa_golf_gazebo.launch world_name:=/home/yoan/Repos/cs_golf/sim/iiwa_only.world
+```
+
 ## Troubleshooting
 ### Fix the robot to the ground
 
