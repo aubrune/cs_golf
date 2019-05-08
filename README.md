@@ -9,7 +9,7 @@ sudo apt install ros-melodic-position-controllers ros-melodic-joy ros-melodic-mo
 ## Start
 
 ```
-roslaunch iiwa_gazebo iiwa_gazebo.launch model:=iiwa7
+roslaunch cs_golf iiwa_golf_gazebo.launch
 LC_ALL=C roslaunch iiwa_moveit demo.launch
 roslaunch cs_golf run.launch
 ```
