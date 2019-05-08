@@ -17,7 +17,7 @@
 <exec_depend>position_controllers</exec_depend>
 <build_depend>iiwa_stack</build_depend>
 <build_depend>message_generation</build_depend>
-<exec_depend>iiwa_stack</exec_depend>
+<exec_depend>iiwa_ros</exec_depend>
 <buildtool_depend>catkin</buildtool_depend>
 
 <export></export>
