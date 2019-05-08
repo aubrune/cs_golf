@@ -194,7 +194,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_0.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/visual/link_0.stl</uri>
             </mesh>
           </geometry>
           <material>
@@ -212,7 +212,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_0.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/collision/link_0.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -287,7 +287,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_1.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/visual/link_1.stl</uri>
             </mesh>
           </geometry>
           <material>
@@ -305,7 +305,7 @@
           <pose frame=''>0 0 0.0075 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_1.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/collision/link_1.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -380,7 +380,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_2.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/visual/link_2.stl</uri>
             </mesh>
           </geometry>
           <material>
@@ -398,7 +398,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_2.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/collision/link_2.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -473,7 +473,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_3.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/visual/link_3.stl</uri>
             </mesh>
           </geometry>
           <material>
@@ -491,7 +491,7 @@
           <pose frame=''>0 0 -0.026 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_3.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/collision/link_3.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -566,7 +566,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_4.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/visual/link_4.stl</uri>
             </mesh>
           </geometry>
           <material>
@@ -584,7 +584,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_4.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/collision/link_4.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -659,7 +659,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_5.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/visual/link_5.stl</uri>
             </mesh>
           </geometry>
           <material>
@@ -677,7 +677,7 @@
           <pose frame=''>0 0 -0.026 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_5.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/collision/link_5.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -752,7 +752,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_6.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/visual/link_6.stl</uri>
             </mesh>
           </geometry>
           <material>
@@ -771,7 +771,7 @@
           <pose frame=''>0 0 0 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_6.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/collision/link_6.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
@@ -846,7 +846,7 @@
           <geometry>
             <mesh>
               <scale>1 1 1</scale>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/visual/link_7.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/visual/link_7.stl</uri>
             </mesh>
           </geometry>
           <material>
@@ -865,7 +865,7 @@
           <pose frame=''>0 0 -0.0005 0 -0 0</pose>
           <geometry>
             <mesh>
-              <uri>/home/yoan/ros_ws/src/iiwa_stack/iiwa_description/meshes/iiwa7/collision/link_7.stl</uri>
+              <uri>/home/yoan/ros_ws/src/iiwa_ros/iiwa_description/meshes/iiwa7/collision/link_7.stl</uri>
               <scale>1 1 1</scale>
             </mesh>
           </geometry>
