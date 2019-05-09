@@ -35,6 +35,7 @@ class InteractionController(object):
         return res.trajectory
 
     def run(self):
+        self.robot.go(self.poses["preinit"])
         while not rospy.is_shutdown():
             self.iteration = rospy.get_param("golf/iteration")
             key = raw_input("Press <enter> to run iteration {}".format(self.iteration))
@@ -44,6 +45,8 @@ class InteractionController(object):
             self.robot.go(self.poses["init"])
             traj = self.plan()
             rospy.logwarn("Shooting!")
+            self.robot.display(traj)
+            print(traj.joint_trajectory.points[-1])
             self.robot.execute(traj)
 
             rospy.sleep(1)

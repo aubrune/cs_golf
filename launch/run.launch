@@ -1,7 +1,14 @@
 <?xml version="1.0"?>
 <launch>
-   
-  <node pkg="cs_golf" type="interaction_controller.py" name="interaction_controller" output="screen"></node>
-  <node pkg="cs_golf" type="learning.py" name="learning" output="screen"></node>
+    <!-- You can disable the RViz graphical user interface -->
+    <arg name="gui" default="false"/>
+
+    <include file="$(find iiwa_moveit)/launch/demo.launch">
+        <env name="LC_ALL" value="C"/>    <!-- Bug in melodic's RViz -->
+        <arg name="gui" value="$(arg gui)"/>
+    </include>
+
+    <node pkg="cs_golf" type="interaction_controller.py" name="interaction_controller" output="screen"></node>
+    <node pkg="cs_golf" type="learning.py" name="learning" output="screen"></node>
 
 </launch>
