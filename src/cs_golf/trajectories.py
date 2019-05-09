@@ -92,6 +92,8 @@ def trapezoidal_speed_trajectory(goal, start,
         return time
 
     def calculate_joint_values(qi, D, tau, tf, nb_points):
+        if tau < 1e-16:
+            tau = 1e-16
         if tf > 0.0001:
             q_values = []
             time = np.linspace(0, tf, nb_points)
