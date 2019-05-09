@@ -38,7 +38,10 @@ class InteractionController(object):
         self.robot.go(self.poses["preinit"])
         while not rospy.is_shutdown():
             self.iteration = rospy.get_param("golf/iteration")
-            key = raw_input("Press <enter> to run iteration {}".format(self.iteration))
+            key = raw_input("Press <enter> to run iteration {} (q-Enter to exit) ".format(self.iteration))
+            if key in ['q', 'Q']:
+                break
+
             rospy.loginfo("Starting iteration {}".format(self.iteration))
 
             # It is more friendly to reinit pose after the iteration started: it focuses the spectator's attention

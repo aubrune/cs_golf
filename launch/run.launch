@@ -8,7 +8,7 @@
         <arg name="gui" value="$(arg gui)"/>
     </include>
 
-    <node pkg="cs_golf" type="interaction_controller.py" name="interaction_controller" output="screen"></node>
+    <node pkg="cs_golf" type="interaction_controller.py" name="interaction_controller" output="screen" required="true"></node>
     <node pkg="cs_golf" type="learning.py" name="learning" output="screen"></node>
 
 </launch>
