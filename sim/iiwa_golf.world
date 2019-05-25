@@ -118,64 +118,64 @@
         </link>
       </model>
       <model name='iiwa'>
-        <pose frame=''>0 -1e-06 4e-06 3.5e-05 -1.2e-05 -1.3e-05</pose>
+        <pose frame=''>0 -1e-06 4e-06 2.1e-05 -1.3e-05 -5e-06</pose>
         <scale>1 1 1</scale>
+        <link name='club_end'>
+          <pose frame=''>-0.388021 -0.344138 1.28163 -1.57005 0.00034 -0.43164</pose>
+          <velocity>0 0 0 0 -0 0</velocity>
+          <acceleration>0 0 0 0 -0 0</acceleration>
+          <wrench>0 0 0 0 -0 0</wrench>
+        </link>
         <link name='club_stick'>
-          <pose frame=''>-0.063061 -0.072054 1.28162 -3.11998 -1.57003 0.758365</pose>
+          <pose frame=''>-0.063062 -0.072037 1.28162 -3.13406 -1.57002 0.772458</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='iiwa_link_0'>
-          <pose frame=''>0 -1e-06 4e-06 3.5e-05 -1.2e-05 -1.3e-05</pose>
+          <pose frame=''>0 -1e-06 4e-06 2.1e-05 -1.3e-05 -5e-06</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='iiwa_link_1'>
-          <pose frame=''>-2e-06 -6e-06 0.150004 3.5e-05 -1.2e-05 -1.3e-05</pose>
+          <pose frame=''>-2e-06 -4e-06 0.150004 2.1e-05 -1.3e-05 -5e-06</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='iiwa_link_2'>
-          <pose frame=''>-4e-06 -1.3e-05 0.340004 1.57076 1.2e-05 3.14158</pose>
+          <pose frame=''>-4e-06 -8e-06 0.340004 1.57078 1.3e-05 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='iiwa_link_3'>
-          <pose frame=''>-7e-06 -2e-05 0.550004 3.5e-05 -1.2e-05 -1.3e-05</pose>
+          <pose frame=''>-7e-06 -1.3e-05 0.550004 2.1e-05 -1.3e-05 -5e-06</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='iiwa_link_4'>
-          <pose frame=''>-9e-06 -2.7e-05 0.740004 1.57083 -1.2e-05 -1.3e-05</pose>
+          <pose frame=''>-1e-05 -1.7e-05 0.740004 1.57082 -1.3e-05 -5e-06</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='iiwa_link_5'>
-          <pose frame=''>-1.1e-05 -3.4e-05 0.950004 -3.5e-05 1.2e-05 3.14158</pose>
+          <pose frame=''>-1.2e-05 -2.1e-05 0.950004 -2.1e-05 1.3e-05 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='iiwa_link_6'>
-          <pose frame=''>-1.4e-05 -0.060741 1.14 1.57076 1.2e-05 3.14158</pose>
+          <pose frame=''>-1.5e-05 -0.060725 1.14 1.57078 1.3e-05 3.14159</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='iiwa_link_7'>
-          <pose frame=''>-1.5e-05 -4.4e-05 1.221 3.5e-05 -1.2e-05 -1.3e-05</pose>
-          <velocity>0 0 0 0 -0 0</velocity>
-          <acceleration>0 0 0 0 -0 0</acceleration>
-          <wrench>0 0 0 0 -0 0</wrench>
-        </link>
-        <link name='club_end'>
-          <pose frame=''>-0.396924 -0.368464 1.28159 -1.56997 -0 0</pose>
+          <pose frame=''>-1.6e-05 -2.7e-05 1.221 2.1e-05 -1.3e-05 -5e-06</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -346,6 +346,104 @@
           </surface>
         </collision>
       </link>
+      <link name='club_end'>
+        <inertial>
+          <mass>0.005</mass>
+          <inertia>
+            <ixx>0.166667</ixx>
+            <ixy>0</ixy>
+            <ixz>0</ixz>
+            <iyy>0.166667</iyy>
+            <iyz>0</iyz>
+            <izz>0.166667</izz>
+          </inertia>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+        </inertial>
+        <pose frame=''>-0.388003 -0.344112 1.28164 -1.57008 0.000343 -0.431635</pose>
+        <gravity>1</gravity>
+        <self_collide>0</self_collide>
+        <kinematic>0</kinematic>
+        <enable_wind>0</enable_wind>
+        <visual name='visual'>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.09 0.01 0.025</size>
+            </box>
+          </geometry>
+          <material>
+            <lighting>1</lighting>
+            <script>
+              <uri>file://media/materials/scripts/gazebo.material</uri>
+              <name>Gazebo/Gold</name>
+            </script>
+            <shader type='vertex'>
+              <normal_map>__default__</normal_map>
+            </shader>
+            <ambient>0.3 0.3 0.3 1</ambient>
+            <diffuse>0.7 0.7 0.7 1</diffuse>
+            <specular>0.01 0.01 0.01 1</specular>
+            <emissive>0 0 0 1</emissive>
+          </material>
+          <transparency>0</transparency>
+          <cast_shadows>1</cast_shadows>
+        </visual>
+        <collision name='collision'>
+          <laser_retro>0</laser_retro>
+          <max_contacts>10</max_contacts>
+          <pose frame=''>0 0 0 0 -0 0</pose>
+          <geometry>
+            <box>
+              <size>0.09 0.01 0.025</size>
+            </box>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <fdir1>0 0 0</fdir1>
+                <slip1>0</slip1>
+                <slip2>0</slip2>
+              </ode>
+              <torsional>
+                <coefficient>1</coefficient>
+                <patch_radius>0</patch_radius>
+                <surface_radius>0</surface_radius>
+                <use_patch_radius>1</use_patch_radius>
+                <ode>
+                  <slip>0</slip>
+                </ode>
+              </torsional>
+            </friction>
+            <bounce>
+              <restitution_coefficient>0</restitution_coefficient>
+              <threshold>1e+06</threshold>
+            </bounce>
+            <contact>
+              <collide_without_contact>0</collide_without_contact>
+              <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
+              <collide_bitmask>1</collide_bitmask>
+              <ode>
+                <soft_cfm>0</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1e+13</kp>
+                <kd>1</kd>
+                <max_vel>0.01</max_vel>
+                <min_depth>0</min_depth>
+              </ode>
+              <bullet>
+                <split_impulse>1</split_impulse>
+                <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
+                <soft_cfm>0</soft_cfm>
+                <soft_erp>0.2</soft_erp>
+                <kp>1e+13</kp>
+                <kd>1</kd>
+              </bullet>
+            </contact>
+          </surface>
+        </collision>
+      </link>
       <link name='club_stick'>
         <inertial>
           <mass>0.5</mass>
@@ -359,7 +457,7 @@
           </inertia>
           <pose frame=''>0 0 0 0 -0 0</pose>
         </inertial>
-        <pose frame=''>-0.063045 -0.072009 1.28162 -3.14152 -1.57 0.779923</pose>
+        <pose frame=''>-0.063045 -0.072009 1.28162 -3.14155 -1.57 0.779957</pose>
         <gravity>1</gravity>
         <self_collide>0</self_collide>
         <kinematic>0</kinematic>
@@ -447,7 +545,7 @@
         </collision>
       </link>
       <link name='iiwa_link_1'>
-        <pose frame=''>0 0 0.15 0 -0 0</pose>
+        <pose frame=''>-0 -0 0.15 0 -0 0</pose>
         <inertial>
           <pose frame=''>0 -0.03 0.12 0 -0 0</pose>
           <mass>3.4525</mass>
@@ -633,7 +731,7 @@
         </collision>
       </link>
       <link name='iiwa_link_3'>
-        <pose frame=''>-0 -0 0.55 0 -0 0</pose>
+        <pose frame=''>0 0 0.55 0 -0 0</pose>
         <inertial>
           <pose frame=''>0 0.03 0.13 0 -0 0</pose>
           <mass>4.05623</mass>
@@ -726,7 +824,7 @@
         </collision>
       </link>
       <link name='iiwa_link_4'>
-        <pose frame=''>0 -0 0.74 1.5708 -0 0</pose>
+        <pose frame=''>-0 0 0.74 1.5708 -0 0</pose>
         <inertial>
           <pose frame=''>0 0.067 0.034 0 -0 0</pose>
           <mass>3.4822</mass>
@@ -819,7 +917,7 @@
         </collision>
       </link>
       <link name='iiwa_link_5'>
-        <pose frame=''>0 -0 0.95 0 0 -3.14159</pose>
+        <pose frame=''>-0 0 0.95 -0 -0 -3.14159</pose>
         <inertial>
           <pose frame=''>0.0001 0.021 0.076 0 -0 0</pose>
           <mass>2.1633</mass>
@@ -1006,7 +1104,7 @@
         </collision>
       </link>
       <link name='iiwa_link_7'>
-        <pose frame=''>-0 -0 1.221 0 -0 0</pose>
+        <pose frame=''>0 0 1.221 0 -0 0</pose>
         <inertial>
           <pose frame=''>0 0 0.02 0 -0 0</pose>
           <mass>3.129</mass>
@@ -1099,104 +1197,6 @@
           </surface>
         </collision>
       </link>
-      <link name='club_end'>
-        <inertial>
-          <mass>0.005</mass>
-          <inertia>
-            <ixx>0.166667</ixx>
-            <ixy>0</ixy>
-            <ixz>0</ixz>
-            <iyy>0.166667</iyy>
-            <iyz>0</iyz>
-            <izz>0.166667</izz>
-          </inertia>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-        </inertial>
-        <pose frame=''>-0.396904 -0.368423 1.2816 -1.57 1.2e-05 1.3e-05</pose>
-        <gravity>1</gravity>
-        <self_collide>0</self_collide>
-        <kinematic>0</kinematic>
-        <enable_wind>0</enable_wind>
-        <visual name='visual'>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.09 0.01 0.025</size>
-            </box>
-          </geometry>
-          <material>
-            <lighting>1</lighting>
-            <script>
-              <uri>file://media/materials/scripts/gazebo.material</uri>
-              <name>Gazebo/Gold</name>
-            </script>
-            <shader type='vertex'>
-              <normal_map>__default__</normal_map>
-            </shader>
-            <ambient>0.3 0.3 0.3 1</ambient>
-            <diffuse>0.7 0.7 0.7 1</diffuse>
-            <specular>0.01 0.01 0.01 1</specular>
-            <emissive>0 0 0 1</emissive>
-          </material>
-          <transparency>0</transparency>
-          <cast_shadows>1</cast_shadows>
-        </visual>
-        <collision name='collision'>
-          <laser_retro>0</laser_retro>
-          <max_contacts>10</max_contacts>
-          <pose frame=''>0 0 0 0 -0 0</pose>
-          <geometry>
-            <box>
-              <size>0.09 0.01 0.025</size>
-            </box>
-          </geometry>
-          <surface>
-            <friction>
-              <ode>
-                <mu>1</mu>
-                <mu2>1</mu2>
-                <fdir1>0 0 0</fdir1>
-                <slip1>0</slip1>
-                <slip2>0</slip2>
-              </ode>
-              <torsional>
-                <coefficient>1</coefficient>
-                <patch_radius>0</patch_radius>
-                <surface_radius>0</surface_radius>
-                <use_patch_radius>1</use_patch_radius>
-                <ode>
-                  <slip>0</slip>
-                </ode>
-              </torsional>
-            </friction>
-            <bounce>
-              <restitution_coefficient>0</restitution_coefficient>
-              <threshold>1e+06</threshold>
-            </bounce>
-            <contact>
-              <collide_without_contact>0</collide_without_contact>
-              <collide_without_contact_bitmask>1</collide_without_contact_bitmask>
-              <collide_bitmask>1</collide_bitmask>
-              <ode>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-                <max_vel>0.01</max_vel>
-                <min_depth>0</min_depth>
-              </ode>
-              <bullet>
-                <split_impulse>1</split_impulse>
-                <split_impulse_penetration_threshold>-0.01</split_impulse_penetration_threshold>
-                <soft_cfm>0</soft_cfm>
-                <soft_erp>0.2</soft_erp>
-                <kp>1e+13</kp>
-                <kd>1</kd>
-              </bullet>
-            </contact>
-          </surface>
-        </collision>
-      </link>
       <joint name="fixedtoworld" type="fixed">
         <parent>world</parent>
         <child>iiwa_link_0</child>
@@ -1208,6 +1208,57 @@
       <joint name='fixedclub' type='fixed'>
         <parent>iiwa_link_7</parent>
         <child>club_end</child>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <physics>
+          <ode>
+            <limit>
+              <cfm>0</cfm>
+              <erp>0.2</erp>
+            </limit>
+            <suspension>
+              <cfm>0</cfm>
+              <erp>0.2</erp>
+            </suspension>
+          </ode>
+        </physics>
+      </joint>
+      <joint name='fixedclubrobot' type='fixed'>
+        <parent>iiwa_link_7</parent>
+        <child>club_stick</child>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <physics>
+          <ode>
+            <limit>
+              <cfm>0</cfm>
+              <erp>0.2</erp>
+            </limit>
+            <suspension>
+              <cfm>0</cfm>
+              <erp>0.2</erp>
+            </suspension>
+          </ode>
+        </physics>
+      </joint>
+      <joint name='fixedclubrobot' type='fixed'>
+        <parent>iiwa_link_7</parent>
+        <child>club_stick</child>
+        <pose frame=''>0 0 0 0 -0 0</pose>
+        <physics>
+          <ode>
+            <limit>
+              <cfm>0</cfm>
+              <erp>0.2</erp>
+            </limit>
+            <suspension>
+              <cfm>0</cfm>
+              <erp>0.2</erp>
+            </suspension>
+          </ode>
+        </physics>
+      </joint>
+      <joint name='fixedclubrobot' type='fixed'>
+        <parent>iiwa_link_7</parent>
+        <child>club_stick</child>
         <pose frame=''>0 0 0 0 -0 0</pose>
         <physics>
           <ode>
