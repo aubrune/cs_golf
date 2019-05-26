@@ -17,6 +17,7 @@ class InteractionController(object):
         self.robot = Robot()
         rospy.set_param("golf/iteration", 0)
         self.iteration = 0
+        self._ball = None
         self.services = {}
         services = {"golf/learning/plan": Plan, "golf/learning/rate": RateIteration}
         for service, type in services.items():
@@ -27,9 +28,11 @@ class InteractionController(object):
         with open(join(self.rospack.get_path("cs_golf"), "config/poses.json")) as f:
             self.poses = json.load(f)
 
-        self._gazebo_services = GazeboServices() if simulated else None
-        self._ball = Ball(self._gazebo_services) if simulated else None
-        self._ball.set_current_pose_as_initial()
+        if simulated:
+            rospy.logwarn("Waiting Gazebo services...")
+            self._gazebo_services = GazeboServices()
+            self._ball = Ball(self._gazebo_services)
+            self._ball.set_current_pose_as_initial()
 
         rospy.loginfo("Interaction Controller is ready!")
 
@@ -51,7 +54,8 @@ class InteractionController(object):
 
             # It is more friendly to reinit pose after the iteration started: it focuses the spectator's attention
             self.robot.go(self.poses["init"])
-            self._ball.reset()
+            if self._ball is not None:
+                self._ball.reset()
             traj = self.plan()
             rospy.logwarn("Shooting!")
             self.robot.display(traj)
@@ -59,9 +63,11 @@ class InteractionController(object):
             self.robot.execute(traj)
 
             rospy.sleep(1)
+            self.robot.go(self.poses["preinit"])
             rospy.set_param("golf/iteration", self.iteration + 1)
+	    
 
 if __name__=='__main__':
     rospy.init_node('cs_golf_interaction_controller')
-    ic = InteractionController(simulated=True)
+    ic = InteractionController(simulated=False)
     ic.run()

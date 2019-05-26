@@ -36,7 +36,7 @@ class Robot(object):
         dt.trajectory.append(rt)
         self._display_pub.publish(dt)
 
-    def go(self, goal_state, kv_max=1.0, ka_max=0.5, wait=True):
+    def go(self, goal_state, kv_max=1.5, ka_max=1.0, wait=True):
         if isinstance(goal_state, dict):
             goal_state = dicttostate(goal_state)
         traj = trapezoidal_speed_trajectory(goal_state, self.current_state, kv_max=kv_max, ka_max=ka_max)

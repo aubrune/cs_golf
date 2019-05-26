@@ -24,7 +24,7 @@ class Learning(object):
 
     def _cb_plan(self, req):
         traj = trapezoidal_speed_trajectory(dicttostate(self.poses["goal"]), req.current_state,
-                                            kv_max=1.0, ka_max=3.0, nb_points=20)
+                                            kv_max=6.0, ka_max=20.0, nb_points=50)
         rospy.loginfo("Generated a trajectory of {} seconds".format(traj.joint_trajectory.points[-1].time_from_start.to_sec()))
         return PlanResponse(trajectory=traj)
 
