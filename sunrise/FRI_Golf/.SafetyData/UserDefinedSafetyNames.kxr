@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<resources xmlns="http://www.kuka.com/schemas/kxr/2009">
+   <module name="UserDefinedSafetyNames">
+      <message key="E_AMF_TYPE_AXIS_RANGE_5_Name">
+         <text xml:lang="en">AXE6</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_RANGE_3_Name">
+         <text xml:lang="en">AXE4</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_TORQUE_0_Name">
+         <text xml:lang="en">Torque axe 1</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_TORQUE_2_Name">
+         <text xml:lang="en">Torsque axe 3</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_RANGE_0_Name">
+         <text xml:lang="en">AXE1</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_TORQUE_6_Name">
+         <text xml:lang="en">Torsque axe 7</text>
+      </message>
+      <message key="E_AMF_TYPE_CARTESIAN_TRANSLATIONAL_VELOCITY_0_Name">
+         <text xml:lang="en">Vitesse effecteur</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_VELOCITY_3_Name">
+         <text xml:lang="en">Velocite axe 3</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_TORQUE_1_Name">
+         <text xml:lang="en">Torsque axe 2</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_VELOCITY_1_Name">
+         <text xml:lang="en">Velocite axe 1</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_TORQUE_4_Name">
+         <text xml:lang="en">Torsque axe 5</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_RANGE_4_Name">
+         <text xml:lang="en">AXE5</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_VELOCITY_4_Name">
+         <text xml:lang="en">Velocite axe 4</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_TORQUE_5_Name">
+         <text xml:lang="en">Torsque axe 6</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_VELOCITY_6_Name">
+         <text xml:lang="en">Velocite axe 6</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_VELOCITY_7_Name">
+         <text xml:lang="en">Velocite axe 7</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_VELOCITY_5_Name">
+         <text xml:lang="en">Velocite axe 5</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_RANGE_2_Name">
+         <text xml:lang="en">AXE3</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_VELOCITY_2_Name">
+         <text xml:lang="en">Velocite axe 2</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_TORQUE_3_Name">
+         <text xml:lang="en">Torsque axe 4</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_RANGE_6_Name">
+         <text xml:lang="en">AXE7</text>
+      </message>
+      <message key="E_AMF_TYPE_AXIS_RANGE_1_Name">
+         <text xml:lang="en">AXE2</text>
+      </message>
+   </module>
+</resources>
