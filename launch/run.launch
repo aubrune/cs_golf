@@ -7,8 +7,11 @@
         <env name="LC_ALL" value="C"/>    <!-- Bug in melodic's RViz -->
         <arg name="gui" value="$(arg gui)"/>
     </include>
+    <param name="golf/working" value="false" />
+    <param name="golf/ready" value="false" />
+    <param name="golf/terrainBusy" value="true" />
 
     <node pkg="cs_golf" type="interaction_controller.py" name="interaction_controller" output="screen" required="true"></node>
     <node pkg="cs_golf" type="learning.py" name="learning" output="screen"></node>
-
+    <node pkg="cs_golf" type="user.py" name="user" output="screen"></node>
 </launch>

@@ -9,7 +9,7 @@ from cs_golf.robot import Robot
 from cs_golf.srv import Plan, PlanRequest
 from cs_golf.srv import RateIteration, RateIterationRequest
 from cs_golf.simulation import GazeboServices, Ball
-
+from std_srvs.srv import Trigger, TriggerResponse
 
 class InteractionController(object):
     def __init__(self, simulated):
@@ -17,6 +17,7 @@ class InteractionController(object):
         self.robot = Robot()
         rospy.set_param("golf/iteration", 0)
         self.iteration = 0
+        self.go_requested = False
         self._ball = None
         self.services = {}
         services = {"golf/learning/plan": Plan, "golf/learning/rate": RateIteration}
@@ -34,8 +35,19 @@ class InteractionController(object):
             self._ball = Ball(self._gazebo_services)
             self._ball.set_current_pose_as_initial()
 
+        rospy.Service('golf/go', Trigger, self._cb_go)
         rospy.loginfo("Interaction Controller is ready!")
 
+    def _cb_go(self, req):
+        self.go_requested = True
+        return TriggerResponse(success=True, message="Request queued")
+
+    def _wait_for_go(self):
+        rate = rospy.Rate(5)
+        while not rospy.is_shutdown() and not self.go_requested:
+            rate.sleep()
+        self.go_requested = False
+        return not rospy.is_shutdown()
 
     def plan(self):
         req = PlanRequest(iteration=self.iteration, current_state=self.robot.current_state)
@@ -44,12 +56,14 @@ class InteractionController(object):
 
     def run(self):
         self.robot.go(self.poses["preinit"])
+        rospy.set_param("golf/ready", True)
+        
         while not rospy.is_shutdown():
+            self.go_requested = False
             self.iteration = rospy.get_param("golf/iteration")
-            key = raw_input("Press <enter> to run iteration {} (q-Enter to exit) ".format(self.iteration))
-            if key in ['q', 'Q']:
+            if not self._wait_for_go():
                 break
-
+            rospy.set_param("golf/ready", False)
             rospy.loginfo("Starting iteration {}".format(self.iteration))
 
             # It is more friendly to reinit pose after the iteration started: it focuses the spectator's attention
@@ -65,6 +79,7 @@ class InteractionController(object):
             rospy.sleep(1)
             self.robot.go(self.poses["preinit"])
             rospy.set_param("golf/iteration", self.iteration + 1)
+            rospy.set_param("golf/ready", True)
 	    
 
 if __name__=='__main__':
