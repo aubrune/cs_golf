@@ -3,10 +3,6 @@
     <!-- You can disable the RViz graphical user interface -->
     <arg name="gui" default="false"/>
 
-    <include file="$(find iiwa_moveit)/launch/demo.launch">
-        <env name="LC_ALL" value="C"/>    <!-- Bug in melodic's RViz -->
-        <arg name="gui" value="$(arg gui)"/>
-    </include>
     <param name="golf/working" value="false" />
     <param name="golf/ready" value="false" />
     <param name="golf/terrainBusy" value="true" />
@@ -14,4 +10,5 @@
     <node pkg="cs_golf" type="interaction_controller.py" name="interaction_controller" output="screen" required="true"></node>
     <node pkg="cs_golf" type="learning.py" name="learning" output="screen"></node>
     <node pkg="cs_golf" type="user.py" name="user" output="screen"></node>
+    <node pkg="tf" type="static_transform_publisher" name="static_tf_putter" args="-0.385 -0.396 0.02 -0.604 -0.405 -0.601 0.331 iiwa_link_ee putter 80" output="screen"></node>
 </launch>
