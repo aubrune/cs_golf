@@ -25,21 +25,34 @@ class Learning(object):
         rospy.loginfo("Learning node is ready to plan!")
 
     def _make_shooting_trajectory(self, json_traj, duration):
-        if duration < 0.5:
-            rospy.logerr("Sanity check: trajectory is", duration, "sec long, but minimum is 0.5 sec")
+        if duration < 0.1:
+            rospy.logerr("Sanity check: trajectory is", duration, "sec long, but minimum is 0.1 sec")
         rt = RobotTrajectory()
-        rt.joint_trajectory.joint_names = self.motions["joints"]
+        rt.joint_trajectory.joint_names = [str(j) for j in self.motions["joints"]]
         num_points = len(json_traj)
+        time = 0
+        time_step = float(duration)/num_points
+        # Acceleration-deceleration profile
+        profile = []
+        num_points_acceleration = int(num_points/4)
+        for i in range(num_points_acceleration):
+            profile.append(4. - 3*(float(i)/num_points_acceleration))
+        for i in range(num_points - 2*num_points_acceleration):
+            profile.append(1.)
+        for i in range(num_points_acceleration):
+            profile.append(1. + 3*float(i)/num_points_acceleration)
+        time = 0
         for i_point, point in enumerate(json_traj):
+            time += profile[i_point] * time_step
             jtp = JointTrajectoryPoint()
             jtp.positions = point
-            jtp.time_from_start = rospy.Duration.from_sec((i_point+1)*duration/num_points)
+            jtp.time_from_start = rospy.Duration.from_sec(time)
             rt.joint_trajectory.points.append(jtp)
         return rt
 
     def _cb_plan(self, req):
-        i_motion = 0
-        duration = 1.0
+        i_motion = 50
+        duration = 0.1
         angle = self.motions["trajectories"][i_motion]["angle"]
         traj = self._make_shooting_trajectory(self.motions["trajectories"][i_motion]["points"], duration)
         rospy.loginfo("Generated a trajectory of {} sec with angle {}".format(duration, angle))

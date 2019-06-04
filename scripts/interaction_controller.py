@@ -72,7 +72,7 @@ class InteractionController(object):
             self.robot.go(init)
             if self._ball is not None:
                 self._ball.reset()
-
+            rospy.sleep(0.5)
             rospy.logwarn("Shooting!")
             self.robot.display(traj)
             print(traj.joint_trajectory.points[-1])
