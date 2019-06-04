@@ -20,6 +20,7 @@ class InteractionController(object):
         self.go_requested = False
         self._ball = None
         self.services = {}
+        self.simulated = simulated
         services = {"golf/learning/plan": Plan, "golf/learning/rate": RateIteration}
         for service, type in services.items():
             rospy.loginfo("Interaction Controller is waiting for {}...".format(service))
@@ -45,7 +46,7 @@ class InteractionController(object):
     def _wait_for_go(self):
         rate = rospy.Rate(5)
         while not rospy.is_shutdown() and not self.go_requested:
-            if not self.robot.commanding:
+            if not self.simulated and not self.robot.commanding:
                 rospy.logerr("Robot is no longer in COMMANDING mode")
                 return False
             rate.sleep()
@@ -58,7 +59,7 @@ class InteractionController(object):
         return res.trajectory
 
     def run(self):
-        while not self.robot.commanding and not rospy.is_shutdown():
+        while not self.simulated and not self.robot.commanding and not rospy.is_shutdown():
             rospy.loginfo("Waiting for robot status COMMANDING...")
             rospy.loginfo("Please activate FRIGolf in the smartpad...")
             rospy.sleep(2)
@@ -98,5 +99,5 @@ class InteractionController(object):
 
 if __name__=='__main__':
     rospy.init_node('cs_golf_interaction_controller')
-    ic = InteractionController(simulated=False)
+    ic = InteractionController(simulated=rospy.get_param("golf/simulated"))
     ic.run()
