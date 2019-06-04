@@ -88,7 +88,6 @@ class InteractionController(object):
             rospy.sleep(0.5)
             rospy.logwarn("Shooting!")
             self.robot.display(traj)
-            print(traj.joint_trajectory.points[-1])
             self.robot.execute(traj)
 
             rospy.sleep(1)
