@@ -51,11 +51,11 @@ class Learning(object):
         return rt
 
     def _cb_plan(self, req):
-        i_motion = 72
-        duration = 0.08
+        i_motion = 50
+        duration = 0.1
         angle = self.motions["trajectories"][i_motion]["angle"]
         traj = self._make_shooting_trajectory(self.motions["trajectories"][i_motion]["points"], duration)
-        rospy.loginfo("Generated a trajectory of {} sec with angle {}".format(duration, angle))
+        rospy.loginfo("Generated a trajectory of {} sec with angle {}".format(traj.joint_trajectory.points[-1].time_from_start.to_sec(), angle))
         return PlanResponse(trajectory=traj)
 
     def _cb_rate(self, req):
