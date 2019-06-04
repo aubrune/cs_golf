@@ -66,11 +66,13 @@ class InteractionController(object):
             rospy.set_param("golf/ready", False)
             rospy.loginfo("Starting iteration {}".format(self.iteration))
 
+            traj = self.plan()
+            init = {"position": traj.joint_trajectory.points[0].positions, "name": traj.joint_trajectory.joint_names}
             # It is more friendly to reinit pose after the iteration started: it focuses the spectator's attention
-            self.robot.go(self.poses["init"])
+            self.robot.go(init)
             if self._ball is not None:
                 self._ball.reset()
-            traj = self.plan()
+
             rospy.logwarn("Shooting!")
             self.robot.display(traj)
             print(traj.joint_trajectory.points[-1])
