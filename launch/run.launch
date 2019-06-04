@@ -3,6 +3,13 @@
     <!-- You can disable the RViz graphical user interface -->
     <arg name="gui" default="false"/>
 
+    <arg name="simulated" default="false"/>
+
+    <include file="$(find iiwa_moveit)/launch/demo.launch">
+        <env name="LC_ALL" value="C"/>    <!-- Bug in melodic's RViz -->
+        <arg name="gui" value="$(arg gui)"/>
+        <arg unless="$(arg simulated)" name="driver" value="true"/>   <!-- Will start the connection to the real iiwa -->
+    </include>
     <param name="golf/working" value="false" />
     <param name="golf/ready" value="false" />
     <param name="golf/terrainBusy" value="true" />

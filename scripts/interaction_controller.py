@@ -45,6 +45,9 @@ class InteractionController(object):
     def _wait_for_go(self):
         rate = rospy.Rate(5)
         while not rospy.is_shutdown() and not self.go_requested:
+            if not self.robot.commanding:
+                rospy.logerr("Robot is no longer in COMMANDING mode")
+                return False
             rate.sleep()
         self.go_requested = False
         return not rospy.is_shutdown()
@@ -55,13 +58,22 @@ class InteractionController(object):
         return res.trajectory
 
     def run(self):
-        self.robot.go(self.poses["preinit"])
-        rospy.set_param("golf/ready", True)
+        while not self.robot.commanding and not rospy.is_shutdown():
+            rospy.loginfo("Waiting for robot status COMMANDING...")
+            rospy.loginfo("Please activate FRIGolf in the smartpad...")
+            rospy.sleep(2)
+
+        if not rospy.is_shutdown():
+            rospy.loginfo("Robot is reading in COMMANDING mode!")
+            self.robot.go(self.poses["preinit"])
+            rospy.set_param("golf/ready", True)
         
         while not rospy.is_shutdown():
             self.go_requested = False
             self.iteration = rospy.get_param("golf/iteration")
+
             if not self._wait_for_go():
+                rospy.logerr("Exiting the cs_golf Interaction controller")
                 break
             rospy.set_param("golf/ready", False)
             rospy.loginfo("Starting iteration {}".format(self.iteration))

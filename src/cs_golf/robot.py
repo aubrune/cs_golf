@@ -1,5 +1,6 @@
 import rospy
 import moveit_commander
+from std_msgs.msg import Bool
 from sensor_msgs.msg import JointState
 from moveit_msgs.msg import RobotState, DisplayTrajectory, RobotTrajectory
 from trajectory_msgs.msg import JointTrajectory
@@ -17,6 +18,19 @@ class Robot(object):
         self.commander = moveit_commander.RobotCommander()
         self.group = moveit_commander.MoveGroupCommander(group_name)
         self._display_pub = rospy.Publisher("/{}/move_group/display_planned_path".format(ns), DisplayTrajectory, queue_size=1)
+
+        self._commanding_sub = rospy.Subscriber("/iiwa/commanding_status", Bool, self._cb_commanding_status, queue_size=1)
+        self._last_commanding_status = False
+        self._last_commanding_status_date = rospy.Time(0)
+
+    def _cb_commanding_status(self, msg):
+        self._last_commanding_status = msg.data
+        self._last_commanding_status_date = rospy.Time.now()
+
+    @property
+    def commanding(self):
+        now = rospy.Time.now()
+        return self._last_commanding_status and self._last_commanding_status_date > now - rospy.Duration (0.5)
 
     @property
     def current_state(self):
