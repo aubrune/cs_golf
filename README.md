@@ -5,6 +5,18 @@
 ```
 sudo apt install ros-melodic-position-controllers ros-melodic-joy ros-melodic-moveit-resources ros-melodic-moveit-core ros-melodic-joint-trajectory-controller
 ```
+Install the LIDAR:
+```
+cd ros_ws/src
+git clone https://github.com/ymollard/ydlidar.git
+cd ydlidar/startup
+sudo ./initenv.sh
+
+# Plug the LIDAR now and check:
+sudo service udev restart
+ls -l /dev/ydlidar
+roslaunch ydlidar display.launch
+```
 
 ## Start
 
