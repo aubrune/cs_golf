@@ -38,14 +38,27 @@ class UserNode(object):
         return self._last_commanding_status and self._last_commanding_status_date > now - rospy.Duration (0.5)
 
     def get_ready(self):
-        iteration = rospy.get_param("golf/iteration", 0)
-        lidar_ok = not rospy.get_param("golf/lidar_error", True)
-        return json.dumps({
-            "working": self.commanding and lidar_ok,
-            "ready": rospy.get_param("golf/ready", False),
-            "terrainBusy": rospy.get_param("golf/terrainBusy", True),
-            "iteration": iteration
-        })
+        try:
+            iteration = rospy.get_param("golf/iteration", 0)
+            lidar_ok = not rospy.get_param("golf/lidar_error", True)
+            ready = rospy.get_param("golf/ready", False)
+            terrainBusy = rospy.get_param("golf/terrainBusy", True)
+            all_ready = ready and lidar_ok and not terrainBusy
+        
+            return json.dumps({
+                "working": self.commanding and lidar_ok,
+                "ready": all_ready,
+                "terrainBusy": terrainBusy,
+                "iteration": iteration
+            })
+        except:
+            return json.dumps({
+                "working": False,
+                "ready": False,
+                "terrainBusy": True,
+                "iteration": -1,
+                "message": "No service"
+            })
 
     def post_go(self):
         def service_go():
@@ -57,35 +70,45 @@ class UserNode(object):
                 rospy.logerr("Cannot call service to trigger iteration: " + repr(e))
             return False, "Cannot call service to trigger iteration"
 
-        terrainBusy = rospy.get_param("golf/terrainBusy", True)
-        ready = rospy.get_param("golf/ready", False)
-        if not ready:
-            return json.dumps({
-                "success": False,
-                "terrainBusy": terrainBusy,
-                "message": "Robot is not ready"
-            })
-        data = request.get_json()
-        if data is not None and "iteration" in data:
-            iteration = rospy.get_param("golf/iteration", 0)
-            if iteration == data["iteration"]:
-                success, message = service_go()
-                return json.dumps({
-                    "success": success,
-                    "terrainBusy": terrainBusy,
-                    "message": ""
-                })
-            else:
+        try:
+            ready = rospy.get_param("golf/ready", False)
+            terrainBusy = rospy.get_param("golf/terrainBusy", True)
+            lidar_ok = not rospy.get_param("golf/lidar_error", True)
+            all_ready = ready and lidar_ok and not terrainBusy
+            if not all_ready:
                 return json.dumps({
                     "success": False,
                     "terrainBusy": terrainBusy,
-                    "message": "Iteration mismatch, expecting {}, got {}".format(iteration, data["iteration"])
+                    "message": "Robot is not ready"
                 })
-        return json.dumps({
-            "success": False,
-            "terrainBusy": terrainBusy,
-            "message": "Request has not a valid JSON payload"
-        })
+            data = request.get_json()
+            if data is not None and "iteration" in data:
+                iteration = rospy.get_param("golf/iteration", 0)
+                received_iteration = int(data["iteration"])
+                if iteration == received_iteration:
+                    success, message = service_go()
+                    return json.dumps({
+                        "success": success,
+                        "terrainBusy": terrainBusy,
+                        "message": message
+                    })
+                else:
+                    return json.dumps({
+                        "success": False,
+                        "terrainBusy": terrainBusy,
+                        "message": "Iteration mismatch, expecting {}, got {}".format(iteration, data["iteration"])
+                    })
+            return json.dumps({
+                "success": False,
+                "terrainBusy": terrainBusy,
+                "message": "Request has not a valid JSON payload"
+            })
+        except Exception as e:
+            return json.dumps({
+                "success": False,
+                "terrainBusy": True,
+                "message": "No service"
+            })
 
     def post_rate(self):
         def service_rate():
@@ -97,22 +120,32 @@ class UserNode(object):
                 rospy.logerr("Cannot call service to rate iteration: " + repr(e))
             return False
 
-        data = request.get_json()
-        if data is not None and "iteration" in data and "note" in data:
-            iteration = rospy.get_param("golf/iteration", 0)
-            expected_rated_iteration = iteration - 1 # We're rating the previous iteration
-            if data["iteration"] == expected_rated_iteration:
-                success = service_rate()
-                return json.dumps({"success": success})
-            else:
-                return json.dumps({
-                    "success": False,
-                    "message": "Iteration mismatch, expecting {}, got {}".format(expected_rated_iteration, data["iteration"])
-                })
-        return json.dumps({
-            "success": False,
-            "message": "Request has not a valid JSON payload"
-        })
+        try:
+            data = request.get_json()
+            if data is not None and "iteration" in data and "note" in data:
+                iteration = rospy.get_param("golf/iteration", 0)
+                note = int(data["note"])
+                print("NOTE=", note)
+                received_iteration = int(data["iteration"])
+                expected_rated_iteration = iteration - 1 # We're rating the previous iteration
+                if received_iteration == expected_rated_iteration:
+                    success = service_rate()
+                    success = True
+                    return json.dumps({"success": success})
+                else:
+                    return json.dumps({
+                        "success": True,
+                        "message": "Iteration mismatch, expecting {}, got {}".format(expected_rated_iteration, data["iteration"])
+                    })
+            return json.dumps({
+                "success": False,
+                "message": "Request has not a valid JSON payload"
+            })
+        except:
+            return json.dumps({
+                "success": False,
+                "message": "No service"
+            })
 
     def post_reset(self):
         rospy.set_param("golf/iteration", 0)
