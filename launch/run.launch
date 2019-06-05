@@ -10,6 +10,9 @@
         <arg name="gui" value="$(arg gui)"/>
         <arg name="driver" value="$(eval simulated == false)"/>   <!-- Will start the connection to the real iiwa -->
     </include>
+
+    <include file="$(find ydlidar)/launch/lidar.launch"/>
+
     <param name="golf/simulated" value="$(arg simulated)" />
     <param name="golf/working" value="false" />
     <param name="golf/ready" value="false" />
@@ -18,5 +21,6 @@
     <node pkg="cs_golf" type="interaction_controller.py" name="interaction_controller" output="screen" required="true"></node>
     <node pkg="cs_golf" type="learning.py" name="learning" output="screen"></node>
     <node pkg="cs_golf" type="user.py" name="user" output="screen"></node>
+    <node pkg="cs_golf" type="lidar.py" name="lidar" output="screen"></node>
     <node pkg="tf" type="static_transform_publisher" name="static_tf_putter" args="-0.385 -0.396 0.02 -0.604 -0.405 -0.601 0.331 iiwa_link_ee putter 80" output="screen"></node>
 </launch>

@@ -39,8 +39,9 @@ class UserNode(object):
 
     def get_ready(self):
         iteration = rospy.get_param("golf/iteration", 0)
+        lidar_ok = not rospy.get_param("golf/lidar_error", True)
         return json.dumps({
-            "working": self.commanding,
+            "working": self.commanding and lidar_ok,
             "ready": rospy.get_param("golf/ready", False),
             "terrainBusy": rospy.get_param("golf/terrainBusy", True),
             "iteration": iteration
