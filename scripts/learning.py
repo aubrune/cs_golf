@@ -25,8 +25,6 @@ class Learning(object):
         rospy.loginfo("Learning node is ready to plan!")
 
     def _make_shooting_trajectory(self, json_traj, duration):
-        if duration < 0.05:
-            rospy.logerr("Sanity check: trajectory is", duration, "sec long, but minimum is 0.1 sec")
         rt = RobotTrajectory()
         rt.joint_trajectory.joint_names = [str(j) for j in self.motions["joints"]]
         num_points = len(json_traj)
@@ -51,8 +49,8 @@ class Learning(object):
         return rt
 
     def _cb_plan(self, req):
-        i_motion = 50
-        duration = 0.1
+        i_motion = 45
+        duration = 0.045
         angle = self.motions["trajectories"][i_motion]["angle"]
         traj = self._make_shooting_trajectory(self.motions["trajectories"][i_motion]["points"], duration)
         rospy.loginfo("Generated a trajectory of {} sec with angle {}".format(traj.joint_trajectory.points[-1].time_from_start.to_sec(), angle))
