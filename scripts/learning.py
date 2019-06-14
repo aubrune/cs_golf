@@ -15,6 +15,7 @@ from cs_golf.persistence import dicttostate
 
 class Learning(object):
     def __init__(self):
+        self.smoke_motion_id = 0
         self.rospack = rospkg.RosPack()
         rospy.Service('golf/learning/plan', Plan, self._cb_plan)
         rospy.Service('golf/learning/rate', RateIteration, self._cb_rate)
@@ -49,8 +50,12 @@ class Learning(object):
         return rt
 
     def _cb_plan(self, req):
-        i_motion = 45
-        duration = 0.045
+        i_motion = 0
+        if rospy.get_param('golf/smoke', False):
+            i_motion = self.smoke_motion_id
+            rospy.logwarn("Planning the smoke trajectory #{}".format(i_motion))
+            self.smoke_motion_id = (self.smoke_motion_id + 1) % len(self.motions["trajectories"])
+        duration = 0.2
         angle = self.motions["trajectories"][i_motion]["angle"]
         traj = self._make_shooting_trajectory(self.motions["trajectories"][i_motion]["points"], duration)
         rospy.loginfo("Generated a trajectory of {} sec with angle {}".format(traj.joint_trajectory.points[-1].time_from_start.to_sec(), angle))

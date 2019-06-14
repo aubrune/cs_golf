@@ -68,12 +68,13 @@ class InteractionController(object):
             rospy.loginfo("Robot is reading in COMMANDING mode!")
             self.robot.go(self.poses["preinit"])
             rospy.set_param("golf/ready", True)
-        
+        rospy.set_param('golf/smoke', False)
+        smoke = rospy.get_param('golf/smoke', False)
         while not rospy.is_shutdown():
             self.go_requested = False
             self.iteration = rospy.get_param("golf/iteration")
 
-            if not self._wait_for_go():
+            if not smoke and not self._wait_for_go():
                 rospy.logerr("Exiting the cs_golf Interaction controller")
                 break
             rospy.set_param("golf/ready", False)
