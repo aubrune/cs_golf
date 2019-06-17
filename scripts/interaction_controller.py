@@ -65,11 +65,12 @@ class InteractionController(object):
             rospy.sleep(2)
 
         if not rospy.is_shutdown():
-            rospy.loginfo("Robot is reading in COMMANDING mode!")
+            rospy.loginfo("Robot is ready in COMMANDING mode!")
             self.robot.go(self.poses["preinit"])
             rospy.set_param("golf/ready", True)
         rospy.set_param('golf/smoke', False)
         smoke = rospy.get_param('golf/smoke', False)
+
         while not rospy.is_shutdown():
             self.go_requested = False
             self.iteration = rospy.get_param("golf/iteration")

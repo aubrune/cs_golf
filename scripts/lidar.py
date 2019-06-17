@@ -42,8 +42,13 @@ class Lidar(object):
                 terrainBusy = obstacle_proba > self.MIN_PROBA
                 # print(terrainBusy)
             else:
-                rospy.logerr("Lidar error: no up-to-date data received")
-                rospy.set_param("golf/lidar_error", True)
+                if rospy.get_param("golf/simulated", False):
+                    # Explicitely Ignore LIDAR in simulation
+                    rospy.set_param("golf/lidar_error", False)
+                    terrainBusy = False
+                else:
+                    rospy.logerr("Lidar error: no up-to-date data received")
+                    rospy.set_param("golf/lidar_error", True)
             rospy.set_param("golf/terrainBusy", terrainBusy)
             self.rate.sleep()
 	    
