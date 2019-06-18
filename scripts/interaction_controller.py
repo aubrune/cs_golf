@@ -40,8 +40,11 @@ class InteractionController(object):
         rospy.loginfo("Interaction Controller is ready!")
 
     def _cb_go(self, req):
-        self.go_requested = True
-        return TriggerResponse(success=True, message="Request queued")
+        success = False
+        if rospy.get_param("golf/ready", False):
+            self.go_requested = True
+            success = True
+        return TriggerResponse(success=success, message="Request queued")
 
     def _wait_for_go(self):
         rate = rospy.Rate(5)

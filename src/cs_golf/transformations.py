@@ -2,6 +2,18 @@ import geometry_msgs
 from tf import transformations
 from numpy import ndarray, dot, sqrt, array, arccos, inner, zeros, fill_diagonal
 
+def twist_to_list(twist):
+    """
+    Convert a Twist in Python list ((linear), (angular))
+    :param pose: geometry_msgs.Twist
+    :return: the equivalent in list ((linear), (angular))
+    """
+    if type(twist) == geometry_msgs.msg.Twist:
+        return [[twist.linear.x, twist.linear.y, twist.linear.z],
+                [twist.angular.x, twist.angular.y, twist.angular.z]]
+    else:
+        raise Exception("twist_to_list: parameter of type %s unexpected", str(type(twist)))
+
 def pose_to_list(pose):
     """
     Convert a Pose or PoseStamped in Python list ((position), (quaternion))
@@ -16,7 +28,6 @@ def pose_to_list(pose):
                 [pose.orientation.x, pose.orientation.y, pose.orientation.z, pose.orientation.w]]
     else:
         raise Exception("pose_to_list: parameter of type %s unexpected", str(type(pose)))
-
 
 def list_to_pose(poselist):
     """
