@@ -155,11 +155,8 @@ class Learning(object):
     def run(self):
         rate = rospy.Rate(0.1)
         while not rospy.is_shutdown():
-            #image = self.bridge.cv2_to_imgmsg(self.scores, encoding="8UC1")
-            #self.scores_pub.publish(image)
-            import matplotlib.pyplot as plt
-            plt.imshow(self.scores, cmap='hot', interpolation='nearest')
-            plt.show()
+            image = self.bridge.cv2_to_imgmsg(self.scores)
+            self.scores_pub.publish(image)
             rate.sleep()
 
 if __name__=='__main__':
