@@ -68,9 +68,8 @@ class InteractionController(object):
             rospy.loginfo("Robot is ready in COMMANDING mode!")
             self.robot.go(self.poses["preinit"])
             rospy.set_param("golf/ready", True)
-        rospy.set_param('golf/smoke', False)
-        smoke = rospy.get_param('golf/smoke', False)
 
+        smoke = rospy.get_param('golf/smoke', False)
         while not rospy.is_shutdown():
             self.go_requested = False
             self.iteration = rospy.get_param("golf/iteration")
@@ -87,12 +86,12 @@ class InteractionController(object):
             self.robot.go(init)
             if self._ball is not None:
                 self._ball.reset()
-            rospy.sleep(0.5)
+            rospy.sleep(1)
             rospy.logwarn("Shooting!")
             self.robot.display(traj)
             self.robot.execute(traj)
 
-            rospy.sleep(1)
+            rospy.sleep(2)
             self.robot.go(self.poses["preinit"])
             rospy.set_param("golf/iteration", self.iteration + 1)
             rospy.set_param("golf/ready", True)

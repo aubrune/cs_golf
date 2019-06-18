@@ -3,7 +3,14 @@
     <!-- You can disable the RViz graphical user interface -->
     <arg name="gui" default="false"/>
 
+    <!-- Is the setup simulated in Gazebo? -->
     <arg name="simulated" default="false"/>
+
+    <!-- Should we run a smoke run? It executes all existing trajectories in loop -->
+    <arg name="smoke" default="false"/>
+
+    <!-- Should we force the planner to plan only the optimal trajectory? -->
+    <arg name="optimal" default="false"/>
 
     <include file="$(find iiwa_moveit)/launch/demo.launch">
         <env name="LC_ALL" value="C"/>    <!-- Bug in melodic's RViz -->
@@ -13,6 +20,8 @@
 
     <include unless="$(arg simulated)" file="$(find ydlidar)/launch/lidar.launch"/>
 
+    <param name="golf/optimal" value="$(arg optimal)" />
+    <param name="golf/smoke" value="$(arg smoke)" />
     <param name="golf/simulated" value="$(arg simulated)" />
     <param name="golf/ready" value="false" />
     <param name="golf/terrainBusy" value="true" />

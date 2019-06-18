@@ -18,19 +18,40 @@ ls -l /dev/ydlidar
 roslaunch ydlidar display.launch
 ```
 
-## Start
+## Start in simulation
+
+Choose the following parameters:
+* Smoke mode: executes all possible shooting trajectories (angles only, no variation of speed) in loop
+* Optimal mode: force the planner to plan only the optimal trajectory specifies in configuraiton file optimal.json
+* Simulated: Made for simulations in Gazebo
 
 ```
 roslaunch cs_golf iiwa_golf_gazebo.launch
-LC_ALL=C roslaunch iiwa_moveit demo.launch
-roslaunch cs_golf run.launch
+roslaunch cs-golf-controller.launch simulated:=true optimal:=false smoke:=false
+
+roslaunch cs_golf cs-golf-controller-api.launch # Only to take control through the REST API
+
 ```
+
+## Start on the actual robot
+```
+roslaunch cs-golf-controller.launch simulated:=false optimal:=false smoke:=false
+# Then activate the RobotApplication `FRIGolf` on the robot. Meanwhile the interaction controller is waiting... 
+
+roslaunch cs_golf cs-golf-controller-api.launch # Only to take control through the REST API
+```
+
+## Human-Machine Interface REST API
+The HMI REST API runs on `localhost:5000`, see the entry points in [user.py](scripts/user.py).
 
 ## Other commands
 ```
 # Different world file (no golf club)
 roslaunch cs_golf iiwa_golf_gazebo.launch world_name:=/home/yoan/Repos/cs_golf/sim/iiwa_only.world
 ```
+
+## Start and manage the setup in production
+See [production](install/README.md).
 
 ## Troubleshooting
 ### Fix the robot to the ground

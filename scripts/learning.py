@@ -21,7 +21,7 @@ class Learning(object):
 
     def __init__(self):
         self.bridge = CvBridge()
-        self.smoke_motion_id = 0
+        self.smoke_angle_i = 0
         self.scores = np.ones((self.NUM_VALUES, self.NUM_VALUES))  # scores[speed_i][angle_i] = mark of this trajectory between [0., 1.]
         self.num_votes = 0  # Number of votes taken into account in self.scores so far
         self.pending_iteration_parameters = [-1, -1, -1]  # iteration + speed + angle parameters indexes to be scored
@@ -109,21 +109,26 @@ class Learning(object):
 
     def _cb_plan(self, req):
         iteration = rospy.get_param("golf/iteration")
-        i_motion, i_speed = self._pick_trajectories_params(iteration)
+        i_angle, i_speed = self._pick_trajectories_params(iteration)
+        duration = i_speed*(self.DURATION_RANGE[1] - self.DURATION_RANGE[0])/self.NUM_VALUES + self.DURATION_RANGE[0]   # Linear mapping between indexes and min/max trajecotry durations
 
         # If smoke mode is active, overide the planned trajectory
         if rospy.get_param('golf/smoke', False):
-            i_motion = self.smoke_motion_id
-            rospy.logwarn("Planning the smoke trajectory #{}".format(i_motion))
-            self.smoke_motion_id = (self.smoke_motion_id + 1) % len(self.motions["trajectories"])
+            i_angle = self.smoke_angle_i
+            rospy.logwarn("Planning the smoke trajectory angle #{}".format(i_angle))
+            self.smoke_angle_i = (self.smoke_angle_i + 1) % len(self.motions["trajectories"])
+            i_speed = self.optimal["optimal_speed_i"]
+        elif rospy.get_param('golf/optimal', False):
+            i_speed = self.optimal["optimal_speed_i"]
+            i_angle = self.optimal["optimal_angle_i"]
+            rospy.logwarn("Planning the optimal trajectory angle #{}".format(i_angle))
         
-        duration = i_speed*(self.DURATION_RANGE[1] - self.DURATION_RANGE[0])/self.NUM_VALUES + self.DURATION_RANGE[0]   # Linear mapping between indexes and min/max trajecotry durations
-        angle = self.motions["trajectories"][i_motion]["angle"]
-        traj = self._make_shooting_trajectory(self.motions["trajectories"][i_motion]["points"], duration)
-        rospy.loginfo("Generated a trajectory of {} sec with angle {} (motion index {})".format(traj.joint_trajectory.points[-1].time_from_start.to_sec(), angle, i_motion))
+        angle = self.motions["trajectories"][i_angle]["angle"]
+        traj = self._make_shooting_trajectory(self.motions["trajectories"][i_angle]["points"], duration)
+        rospy.loginfo("Generated a trajectory of {} sec with angle {} (angle index {})".format(traj.joint_trajectory.points[-1].time_from_start.to_sec(), angle, i_angle))
         self.pending_iteration_parameters[0] = iteration
         self.pending_iteration_parameters[1] = i_speed     # Speed index
-        self.pending_iteration_parameters[2] = i_motion    # Motion's ID = its angle (index)    
+        self.pending_iteration_parameters[2] = i_angle    # Motion's ID = its angle (index)    
         return PlanResponse(trajectory=traj)
 
     def _cb_rate(self, req):
