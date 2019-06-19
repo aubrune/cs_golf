@@ -50,6 +50,11 @@ roslaunch cs_golf cs-golf-controller-api.launch # Only to take control through t
 rosrun cs_golf autoplay.py
 ```
 
+In order to record screen of the simulation, adjust:
+```
+ffmpeg -video_size 1280x720 -framerate 20 -f x11grab -i :0.0+2250,200 -crf 0 -preset ultrafast output.mp4
+```
+
 ## Start on the actual robot
 ```
 roslaunch cs-golf-controller.launch simulated:=false optimal:=false smoke:=false
