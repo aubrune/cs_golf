@@ -1,11 +1,26 @@
 # Golf robot
 
-## Deps
+This is a machine learning demonstrator for the general public based on the KUKA IIWA 7R800 robot using ROS and the KUKA Fast Research Library (FRI). The usecase of the demonstrator is a golf putting task.
+
+Putting trajectories are played by the robot. They are not learned as a machine learning scientist would expect, but they are picked among 100 different precomputed swings, and scaled at 100 possibles speeds. The robot can thus explore a space of 10,000 different trajectories and must learn the best ones.
+
+Apart for safety purposes, no perception sensor is mounted on the robot. The robot is blind and relies on marks given by visitors to evaluate the quality of its trajectories.
+
+## Prerequisites to be installed
 
 ```
-sudo apt install ros-melodic-position-controllers ros-melodic-joy ros-melodic-moveit-resources ros-melodic-moveit-core ros-melodic-joint-trajectory-controller
+cd ~/catkin_ws/src
+git clone https://github.com/aubrune/cs_golf.git
+git clone https://github.com/ymollard/iiwa_ros
+sudo apt install ros-melodic-position-controllers ros-melodic-joy ros-melodic-moveit-resources
+sudo apt install ros-melodic-moveit-core ros-melodic-joint-trajectory-controller
+sudo apt install python-pip
+pip install playsound
 ```
-Install the LIDAR:
+
+### LIDAR Setup
+
+Install the LIDAR. If running in simulation, skip this step.
 ```
 cd ros_ws/src
 git clone https://github.com/ymollard/ydlidar.git
