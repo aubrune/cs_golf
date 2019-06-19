@@ -31,6 +31,8 @@ roslaunch cs-golf-controller.launch simulated:=true optimal:=false smoke:=false
 
 roslaunch cs_golf cs-golf-controller-api.launch # Only to take control through the REST API
 
+# You may also want to start an autoplayer simulating visitor's interactions and marks
+rosrun cs_golf autoplay.py
 ```
 
 ## Start on the actual robot
@@ -45,8 +47,22 @@ roslaunch cs_golf cs-golf-controller-api.launch # Only to take control through t
 The HMI REST API runs on `localhost:5000`, see the entry points in [user.py](scripts/user.py).
 
 ## Other commands
+### Visualize the score heatmap of trajectory angles and speed
 ```
-# Different world file (no golf club)
+rosrun cs_golf view_scores.py
+```
+Heat points shows the best marks given to a specific golf club angle and trajectory duration
+
+### Gazebo: Display realtime factor
+```
+# See how fast your Gazebo runs
+rosrun cs_golf get_real_time_factor.py
+```
+Note: to go real time (factor of 1), edit the world file with value 1000 to `<real_time_update_rate>1000</real_time_update_rate>`
+
+### Gazebo: Different world file (no golf club)
+
+```
 roslaunch cs_golf iiwa_golf_gazebo.launch world_name:=/home/yoan/Repos/cs_golf/sim/iiwa_only.world
 ```
 
