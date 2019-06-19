@@ -69,7 +69,7 @@ class GazeboObject(object):
 
 class Ball(GazeboObject):
     REACHED_RADIUS = 0.1
-    EPSILON_TWIST = 1e-3
+    EPSILON_TWIST = 1e-2
 
     def __init__(self, services):
         super(Ball, self).__init__("cricket_ball", services)
