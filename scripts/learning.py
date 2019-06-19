@@ -11,6 +11,7 @@ from moveit_msgs.msg import RobotTrajectory
 from trajectory_msgs.msg import JointTrajectoryPoint
 from cs_golf.srv import RateIteration, RateIterationResponse
 from cs_golf.srv import Plan, PlanResponse
+from cs_golf.sound import SoundClient
 from sensor_msgs.msg import Image
 from cs_golf.persistence import dicttostate
 
@@ -37,7 +38,7 @@ class Learning(object):
 
         with open(join(self.rospack.get_path("cs_golf"), "config/optimal.json")) as f:
             self.optimal = json.load(f)
-       
+        self.sound = SoundClient()
         rospy.loginfo("Learning node is ready to plan!")
 
     def _make_shooting_trajectory(self, json_traj, duration):
@@ -114,6 +115,14 @@ class Learning(object):
             self.num_votes = 0
             rospy.logwarn("Detected jummp back to from iteration {} to {}, score heatmap!".format(self.iteration, iteration))
 
+    def play_sound(self, mark):
+        if 1 <= mark <= 5:
+            self.sound.play("mark_low")
+        elif 6 <= mark <= 8:
+            self.sound.play("mark_neutral")
+        elif 9 <= mark <= 10:
+            self.sound.play("mark_high")
+
     def _cb_plan(self, req):
         iteration = rospy.get_param("golf/iteration")
         self.check_reset(iteration)
@@ -157,6 +166,7 @@ class Learning(object):
                 if 0 <= int_grade <= 10:
                     float_grade = int_grade/10.
                     rospy.logwarn("Recording mark {} for speed index {} and angle index {}".format(float_grade, speed_i, angle_i))
+                    self.play_sound(int_grade)
                     self.add_score(float_grade, float(speed_i)/self.NUM_VALUES, float(angle_i)/self.NUM_VALUES)
                     success = True
                     self.pending_iteration_parameters = [-1, -1, -1]

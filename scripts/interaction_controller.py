@@ -9,12 +9,14 @@ from cs_golf.robot import Robot
 from cs_golf.srv import Plan, PlanRequest
 from cs_golf.srv import RateIteration, RateIterationRequest
 from cs_golf.simulation import GazeboServices, Ball
+from cs_golf.sound import SoundClient
 from std_srvs.srv import Trigger, TriggerResponse
 
 class InteractionController(object):
     def __init__(self, simulated):
         self.rospack = rospkg.RosPack()
         self.robot = Robot()
+        self.sound = SoundClient()
         rospy.set_param("golf/iteration", 0)
         self.iteration = 0
         self.go_requested = False
@@ -53,6 +55,7 @@ class InteractionController(object):
         rate = rospy.Rate(5)
         while not rospy.is_shutdown() and not self.go_requested:
             if not self.simulated and not self.robot.commanding:
+                self.sound.play("siren")
                 rospy.logerr("Robot is no longer in COMMANDING mode")
                 return False
             rate.sleep()
@@ -72,6 +75,7 @@ class InteractionController(object):
 
         if not rospy.is_shutdown():
             rospy.loginfo("Robot is ready in COMMANDING mode!")
+            self.sound.play("ready")
             self.robot.go(self.poses["preinit"])
             rospy.set_param("golf/ready", True)
 
@@ -85,6 +89,7 @@ class InteractionController(object):
                 break
             rospy.set_param("golf/ready", False)
             rospy.loginfo("Starting iteration {}".format(self.iteration))
+            self.sound.play("warning")
 
             traj = self.plan()
             init = {"position": traj.joint_trajectory.points[0].positions, "name": traj.joint_trajectory.joint_names}
@@ -94,6 +99,7 @@ class InteractionController(object):
                 self._ball.reset()
             rospy.sleep(1)
             rospy.logwarn("Shooting!")
+            self.sound.play("swing")
             self.robot.display(traj)
             self.robot.execute(traj)
 
