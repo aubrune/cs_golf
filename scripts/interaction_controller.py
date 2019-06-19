@@ -30,6 +30,9 @@ class InteractionController(object):
         with open(join(self.rospack.get_path("cs_golf"), "config/poses.json")) as f:
             self.poses = json.load(f)
 
+        with open(join(self.rospack.get_path("cs_golf"), "config/optimal.json")) as f:
+            self.optimal = json.load(f)
+
         if simulated:
             rospy.logwarn("Waiting Gazebo services...")
             self._gazebo_services = GazeboServices()
@@ -96,7 +99,8 @@ class InteractionController(object):
 
             rospy.sleep(2)
             self.robot.go(self.poses["preinit"])
-            rospy.set_param("golf/iteration", self.iteration + 1)
+            # Set the new iteration (Note: autoreset to iteration 0 will occur after theoretical convergence has been reached)
+            rospy.set_param("golf/iteration", (self.iteration + 1) % self.optimal["num_iterations_convergence"])
             rospy.set_param("golf/ready", True)
 	    
 

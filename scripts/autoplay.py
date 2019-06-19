@@ -6,10 +6,13 @@ This is a Golf autoplayer simulating user's interaction and feedbacks through ev
 Only works with Gazebo running (simulated:=True)
 """
 
-import rospy
+import rospy, json
+from time import time
 from cs_golf.simulation import Ball, Hole, GazeboServices
 from cs_golf.srv import RateIteration
 from std_srvs.srv import Trigger
+from os.path import join
+from rospkg import RosPack
 
 class Autoplayer(object):
     def __init__(self, gazebo_services):
@@ -19,6 +22,10 @@ class Autoplayer(object):
         self._rate = rospy.ServiceProxy(self._rate_name, RateIteration)
         self.ball = Ball(gazebo_services)
         self.hole = Hole(gazebo_services)
+        self.name = str(int(time()))
+        self.rospack = RosPack()
+        self.times = []
+        self.marks = []
     
     def go(self):
         try:
@@ -41,8 +48,12 @@ class Autoplayer(object):
         """
         distance = self.ball.distance_from(self.hole)
         rospy.loginfo("Distance hole-ball: {}".format(distance))
-        mark = 11 - min(10, max(1, int(distance*5)))
+        mark = 11 - min(10, max(1, int(distance*10)))
         return mark
+
+    def save_progress(self):
+        with open(join(self.rospack.get_path("cs_golf"), "data/autoplayer_{}.json".format(self.name)), 'w') as f:
+            json.dump(dict(zip(self.times, self.marks)), f)
 
     def run(self):
         while not rospy.is_shutdown():
@@ -77,6 +88,11 @@ class Autoplayer(object):
             rospy.logwarn("AUTOPLAYER: Giving the mark of {}".format(mark))
             if not self.rate(mark, iteration):
                 rospy.logerr("AUTOPLAYER received failure during Rate operation")
+
+            # Dump autoplayer progress (special mark 11 is given when the ball fits the hole)
+            self.times.append(rospy.Time.now().to_sec())
+            self.marks.append(mark if not fallen else 11)
+            self.save_progress()
 
             rospy.sleep(1)
 

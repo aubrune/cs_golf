@@ -27,6 +27,7 @@ class Learning(object):
         self.pending_iteration_parameters = [-1, -1, -1]  # iteration + speed + angle parameters indexes to be scored
         self.x = np.linspace(0, 1, self.NUM_VALUES)   # Basic linear space for speed and angle dimensions
         self.rospack = rospkg.RosPack()
+        self.iteration = -1   # Last planned iteration
         rospy.Service('golf/learning/plan', Plan, self._cb_plan)
         rospy.Service('golf/learning/rate', RateIteration, self._cb_rate)
         self.scores_pub = rospy.Publisher("golf/learning/scores", Image, queue_size=1)
@@ -107,8 +108,17 @@ class Learning(object):
         self.scores = (self.num_votes*self.scores + new_frame)/(self.num_votes+1)
         self.num_votes += 1
 
+    def check_reset(self, iteration):
+        if iteration < self.iteration:
+            self.scores = np.ones((self.NUM_VALUES, self.NUM_VALUES))  # scores[speed_i][angle_i] = mark of this trajectory between [0., 1.]
+            self.num_votes = 0
+            rospy.logwarn("Detected jummp back to from iteration {} to {}, score heatmap!".format(self.iteration, iteration))
+
     def _cb_plan(self, req):
         iteration = rospy.get_param("golf/iteration")
+        self.check_reset(iteration)
+        self.iteration = iteration
+        
         i_angle, i_speed = self._pick_trajectories_params(iteration)
         duration = i_speed*(self.DURATION_RANGE[1] - self.DURATION_RANGE[0])/self.NUM_VALUES + self.DURATION_RANGE[0]   # Linear mapping between indexes and min/max trajecotry durations
 
