@@ -8,15 +8,15 @@ from cs_golf.trajectories import trapezoidal_speed_trajectory
 from cs_golf.persistence import dicttostate
 
 class Robot(object):
-    def __init__(self, group_name="manipulator", ns="iiwa"):
+    def __init__(self, group_name="manipulator", ns="iiwa", start_group=True):
 
         #FIXME: moveit_commander.MoveGroupCommander(group_name, ns=ns) shouldn't fail
         # Is there a better fix?
         from os import environ
         environ["ROS_NAMESPACE"] = ns
 
-        self.commander = moveit_commander.RobotCommander()
-        self.group = moveit_commander.MoveGroupCommander(group_name)
+        self.commander = moveit_commander.RobotCommander() if start_group else None
+        self.group = moveit_commander.MoveGroupCommander(group_name) if start_group else None
         self._display_pub = rospy.Publisher("/{}/move_group/display_planned_path".format(ns), DisplayTrajectory, queue_size=1)
 
         self._commanding_sub = rospy.Subscriber("/iiwa/commanding_status", Bool, self._cb_commanding_status, queue_size=1)
