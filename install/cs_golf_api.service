@@ -12,6 +12,8 @@ RestartSec=1
 Restart=always
 
 [Install]
-WantedBy=cs_golf_roscore.target
+Requires=cs_golf_roscore.service
+After=cs_golf_roscore.service
+WantedBy=multi-user.target
 
 # Keep a new line at EOF
