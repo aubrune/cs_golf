@@ -17,6 +17,7 @@ import com.kuka.roboticsAPI.geometricModel.Tool;
 import com.kuka.roboticsAPI.motionModel.PositionHold;
 import com.kuka.roboticsAPI.motionModel.controlModeModel.JointImpedanceControlMode;
 import com.kuka.roboticsAPI.uiModel.ApplicationDialogType;
+import com.kuka.roboticsAPI.executionModel.CommandInvalidException;
 
 /**
  * Moves the LBR in a start position, creates an FRI-Session and executes a
@@ -42,9 +43,7 @@ public class FRIGolf extends RoboticsAPIApplication
         // *** change next line to the FRIClient's IP address                 ***
         // **********************************************************************
         _clientName = "192.170.10.10";
-        gripper.attachTo(_lbr.getFlange());
-        getLogger().info("Golf putter loaded!");
-        
+        gripper.attachTo(_lbr.getFlange());       
     }
 
     @Override
@@ -56,10 +55,8 @@ public class FRIGolf extends RoboticsAPIApplication
         friConfiguration.setSendPeriodMilliSec(5);
         friConfiguration.setReceiveMultiplier(1);
 
-        getLogger().info("Creating FRI connection to " + friConfiguration.getHostName());
-        getLogger().info("SendPeriod: " + friConfiguration.getSendPeriodMilliSec() + "ms |"
-                + " ReceiveMultiplier: " + friConfiguration.getReceiveMultiplier());
-
+        getLogger().info("Tentative de connexion FRI à l'ordinateur...");
+        
         FRISession friSession = new FRISession(friConfiguration);
 
         // wait until FRI session is ready to switch to command mode
@@ -69,73 +66,36 @@ public class FRIGolf extends RoboticsAPIApplication
         }
         catch (final TimeoutException e)
         {
-            getLogger().error(e.getLocalizedMessage());
+            getLogger().error("Le robot ne peut pas se connecter à l'ordinateur après 10 secondes. Branchements OK ?");
             friSession.close();
             return;
         }
 
-        getLogger().info("FRI connection established.");
+        getLogger().info("Connexion FRI avec l'ordinateur établie");
         
-        int modeChoice = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "Choose control mode", "Torque", "Position", "Wrench");
+        int powerChoice = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "Vérifiez qu'aucune personne ou obstacle ne se trouve à moins de 2m du robot puis confirmer la mise sous tension du robot", "Mettre sous tension", "Annuler");
+        ClientCommandMode mode = ClientCommandMode.POSITION;
 
-        ClientCommandMode mode = ClientCommandMode.TORQUE;
-        if (modeChoice == 0) {
-        	getLogger().info("Torque control mode chosen");
-        	mode = ClientCommandMode.TORQUE;
-        }
-        else if (modeChoice == 1) {
-        	getLogger().info("Position control mode chosen");
-        	mode = ClientCommandMode.POSITION;
-        }
-        else if (modeChoice == 2) {
-        	getLogger().warn("Wrench control mode not supported yet. Using position control mode instead");
-        	mode = ClientCommandMode.POSITION;
+        if (powerChoice == 0) {
+        	getLogger().info("Déverouillage des freins et mise sous tension en cours");
+        	
+            // start PositionHold with overlay
+        	double stiffness = 300.;
+        	JointImpedanceControlMode ctrMode = new JointImpedanceControlMode(stiffness, stiffness, stiffness, stiffness, stiffness, stiffness, stiffness);
+
+        	try {
+	            PositionHold posHold = new PositionHold(ctrMode, -1, TimeUnit.SECONDS);
+	            FRIJointOverlay jointOverlay = new FRIJointOverlay(friSession, mode);
+	        	getLogger().info("Le robot est prêt !");
+	            _lbr.move(posHold.addMotionOverlay(jointOverlay));
+        	}
+        	catch(final CommandInvalidException e) {
+            	getLogger().error("Le robot s'est arrêté automatiquement. Veuillez DECOCHER puis RECOCHER FriGolf dans le menu Application avant de relancer avec la flèche verte >");
+        	}
         }
         else {
-        	getLogger().warn("Invalid choice: using position control mode");
-        	mode = ClientCommandMode.POSITION;
+        	getLogger().error("Mise sous tension avortée. Veuillez décocher et recocher FriGolf dans le menu Application avant de la relancer avec la flèche verte >");
         }
-        FRIJointOverlay jointOverlay = new FRIJointOverlay(friSession, mode);
-        
-        int choice = getApplicationUI().displayModalDialog(ApplicationDialogType.QUESTION, "Choose stiffness for actuators", "0", "20", "50", "150", "300", "400");
-
-        double stiffness = 0.;
-        if (choice == 0) {
-        	getLogger().info("Stiffness of '0' chosen");
-        	stiffness = 0.;
-        }
-        else if (choice == 1) {
-        	getLogger().info("Stiffness of '20' chosen");
-        	stiffness = 20.;
-        }
-        else if (choice == 2) {
-        	getLogger().info("Stiffness of '50' chosen");
-        	stiffness = 50.;
-        }
-        else if (choice == 3) {
-        	getLogger().info("Stiffness of '150' chosen");
-        	stiffness = 150.;
-        }
-        else if (choice == 4) {
-        	getLogger().info("Stiffness of '300' chosen");
-        	stiffness = 300.;
-        }
-        else if (choice == 5) {
-        	getLogger().info("Stiffness of '400' chosen");
-        	stiffness = 400.;
-        }
-        else {
-        	getLogger().warn("Invalid choice: setting stiffness to '20'");
-        	stiffness = 20.;
-        }
-
-        // start PositionHold with overlay
-        JointImpedanceControlMode ctrMode = new JointImpedanceControlMode(stiffness, stiffness, stiffness, stiffness, stiffness, stiffness, stiffness);
-        if (mode == ClientCommandMode.TORQUE)
-        	ctrMode.setDampingForAllJoints(0.);
-        PositionHold posHold = new PositionHold(ctrMode, -1, TimeUnit.SECONDS);
-
-        _lbr.move(posHold.addMotionOverlay(jointOverlay));
 
         // done
         friSession.close();
