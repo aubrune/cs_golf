@@ -67,6 +67,22 @@ class InteractionController(object):
         res = self.services["golf/learning/plan"].call(req)
         return res.trajectory
 
+    def must_continue(self):
+        while True:
+            if self.simulated or rospy.is_shutdown():
+                return True
+            elif rospy.is_shutdown():
+                return False
+            elif not rospy.get_param("golf/lidar_error", True):
+                if not rospy.get_param("golf.terrainBusy", True):
+                    return True
+                else:
+                    rospy.logwarn("LIDAR reports that the terrain is busy, waiting it te be free before moving...")
+            else:
+                rospy.logerr("LIDAR is in error state")
+            rospy.sleep(2)
+        
+
     def run(self):
         while not self.simulated and not self.robot.commanding and not rospy.is_shutdown():
             rospy.loginfo("Waiting for robot status COMMANDING...")
@@ -94,20 +110,23 @@ class InteractionController(object):
             traj = self.plan()
             init = {"position": traj.joint_trajectory.points[0].positions, "name": traj.joint_trajectory.joint_names}
             # It is more friendly to reinit pose after the iteration started: it focuses the spectator's attention
-            self.robot.go(init)
-            if self._ball is not None:
-                self._ball.reset()
-            rospy.sleep(1)
-            rospy.logwarn("Shooting!")
-            self.sound.play("swing")
-            self.robot.display(traj)
-            self.robot.execute(traj)
+            if self.must_continue():
+                self.robot.go(init)
+                if self._ball is not None:
+                    self._ball.reset()
+                rospy.sleep(1)
+                if self.must_continue():
+                    rospy.logwarn("Shooting!")
+                    self.sound.play("swing")
+                    self.robot.display(traj)
+                    self.robot.execute(traj)
 
-            rospy.sleep(2)
-            self.robot.go(self.poses["preinit"])
-            # Set the new iteration (Note: autoreset to iteration 0 will occur after theoretical convergence has been reached)
-            rospy.set_param("golf/iteration", (self.iteration + 1) % self.optimal["num_iterations_convergence"])
-            rospy.set_param("golf/ready", True)
+                    rospy.sleep(2)
+                    if self.must_continue():
+                        self.robot.go(self.poses["preinit"])
+                        # Set the new iteration (Note: autoreset to iteration 0 will occur after theoretical convergence has been reached)
+                        rospy.set_param("golf/iteration", (self.iteration + 1) % self.optimal["num_iterations_convergence"])
+                        rospy.set_param("golf/ready", True)
 	    
 
 if __name__=='__main__':
