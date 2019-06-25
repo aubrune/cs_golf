@@ -48,7 +48,7 @@ class Lidar(object):
                     rospy.set_param("golf/lidar_error", False)
                     terrainBusy = False
                 else:
-                    rospy.logerr("Lidar error: no up-to-date data received")
+                    #rospy.logerr("Lidar error: no up-to-date data received")
                     rospy.set_param("golf/lidar_error", True)
             rospy.set_param("golf/terrainBusy", terrainBusy)
             self.rate.sleep()

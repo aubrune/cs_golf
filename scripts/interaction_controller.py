@@ -55,7 +55,6 @@ class InteractionController(object):
         rate = rospy.Rate(5)
         while not rospy.is_shutdown() and not self.go_requested:
             if not self.simulated and not self.robot.commanding:
-                self.sound.play("siren")
                 rospy.logerr("Robot is no longer in COMMANDING mode")
                 return False
             rate.sleep()
@@ -74,14 +73,14 @@ class InteractionController(object):
             elif rospy.is_shutdown():
                 return False
             elif not rospy.get_param("golf/lidar_error", True):
-                if not rospy.get_param("golf.terrainBusy", True):
+                if not rospy.get_param("golf/terrainBusy", True):
                     return True
                 else:
                     rospy.logwarn("LIDAR reports that the terrain is busy, waiting it te be free before moving...")
             else:
                 rospy.logerr("LIDAR is in error state")
-            rospy.sleep(2)
-        
+            self.sound.play("warning_short")
+            rospy.sleep(2.5)
 
     def run(self):
         while not self.simulated and not self.robot.commanding and not rospy.is_shutdown():
