@@ -5,7 +5,10 @@ import rospy
 import rospkg
 import json
 import numpy as np
-from os.path import join
+from time import strftime, time
+from os.path import join, isdir
+from os import makedirs
+from cv2 import imwrite
 from cv_bridge import CvBridge
 from moveit_msgs.msg import RobotTrajectory
 from trajectory_msgs.msg import JointTrajectoryPoint
@@ -123,6 +126,22 @@ class Learning(object):
         elif 9 <= mark <= 10:
             self.sound.play("mark_high")
 
+    def save_shoot(self, data):
+        date = strftime("%Y/%B/%d")
+        day = strftime("%H_%M_%S")
+        shoot_dir = join(self.rospack.get_path("cs_golf"), "data", date)
+        shoot_file = join(shoot_dir, day + ".json")
+        map_file = join(shoot_dir, day + "_map.png")
+        try:
+            if not isdir(shoot_dir):
+                makedirs(shoot_dir)
+            with open(shoot_file, "w") as f:
+                json.dump(data, f)
+            if data["type"] == "rate":
+                imwrite(map_file, 255*self.scores / np.max(self.scores))
+        except IOError as e:
+            rospy.logerr("Can't save shoot: " + repr(e))
+
     def _cb_plan(self, req):
         iteration = rospy.get_param("golf/iteration")
         self.check_reset(iteration)
@@ -148,6 +167,7 @@ class Learning(object):
         self.pending_iteration_parameters[0] = iteration
         self.pending_iteration_parameters[1] = i_speed     # Speed index
         self.pending_iteration_parameters[2] = i_angle    # Motion's ID = its angle (index)    
+        self.save_shoot({"type": "plan", "iteration": iteration, "i_speed": i_speed, "i_angle": i_angle, "angle": angle})
         return PlanResponse(trajectory=traj)
 
     def _cb_rate(self, req):
@@ -170,6 +190,7 @@ class Learning(object):
                     self.add_score(float_grade, float(speed_i)/self.NUM_VALUES, float(angle_i)/self.NUM_VALUES)
                     success = True
                     self.pending_iteration_parameters = [-1, -1, -1]
+                    self.save_shoot({"type": "rate", "iteration": iteration, "i_speed": speed_i, "i_angle": angle_i, "int_grade": int_grade})
                 else:
                     rospy.logerr("Invalid integer grade not in [0, 10]: {}".format(int_grade))
             else:
