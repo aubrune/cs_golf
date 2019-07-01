@@ -22,14 +22,17 @@
       <message key="E_AMF_TYPE_CARTESIAN_TRANSLATIONAL_VELOCITY_0_Name">
          <text xml:lang="en">Vitesse effecteur</text>
       </message>
+      <message key="E_AMF_TYPE_AXIS_VELOCITY_0_Name">
+         <text xml:lang="en">Velocite axe 1</text>
+      </message>
       <message key="E_AMF_TYPE_AXIS_VELOCITY_3_Name">
-         <text xml:lang="en">Velocite axe 3</text>
+         <text xml:lang="en">Velocite axe 4</text>
       </message>
       <message key="E_AMF_TYPE_AXIS_TORQUE_1_Name">
          <text xml:lang="en">Torsque axe 2</text>
       </message>
       <message key="E_AMF_TYPE_AXIS_VELOCITY_1_Name">
-         <text xml:lang="en">Velocite axe 1</text>
+         <text xml:lang="en">Velocite axe 2</text>
       </message>
       <message key="E_AMF_TYPE_AXIS_TORQUE_4_Name">
          <text xml:lang="en">Torsque axe 5</text>
@@ -38,25 +41,25 @@
          <text xml:lang="en">AXE5</text>
       </message>
       <message key="E_AMF_TYPE_AXIS_VELOCITY_4_Name">
-         <text xml:lang="en">Velocite axe 4</text>
+         <text xml:lang="en">Velocite axe 5</text>
       </message>
       <message key="E_AMF_TYPE_AXIS_TORQUE_5_Name">
          <text xml:lang="en">Torsque axe 6</text>
       </message>
       <message key="E_AMF_TYPE_AXIS_VELOCITY_6_Name">
-         <text xml:lang="en">Velocite axe 6</text>
+         <text xml:lang="en">Velocite axe 7</text>
       </message>
       <message key="E_AMF_TYPE_AXIS_VELOCITY_7_Name">
          <text xml:lang="en">Velocite axe 7</text>
       </message>
       <message key="E_AMF_TYPE_AXIS_VELOCITY_5_Name">
-         <text xml:lang="en">Velocite axe 5</text>
+         <text xml:lang="en">Velocite axe 6</text>
       </message>
       <message key="E_AMF_TYPE_AXIS_RANGE_2_Name">
          <text xml:lang="en">AXE3</text>
       </message>
       <message key="E_AMF_TYPE_AXIS_VELOCITY_2_Name">
-         <text xml:lang="en">Velocite axe 2</text>
+         <text xml:lang="en">Velocite axe 3</text>
       </message>
       <message key="E_AMF_TYPE_AXIS_TORQUE_3_Name">
          <text xml:lang="en">Torsque axe 4</text>
