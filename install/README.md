@@ -7,6 +7,7 @@
 
 ```
 sudo cp cs_golf*.service /lib/systemd/system/
+sudo cp power /etc/acpi/events/power
 sudo systemctl daemon-reload
 sudo systemctl enable cs_golf_roscore.service
 sudo systemctl enable cs_golf_api.service
